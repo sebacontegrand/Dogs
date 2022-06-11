@@ -1,0 +1,37 @@
+
+
+.landing{
+    background-image: url('../assets/foto2.jpg');
+    background-size:100%;
+    background-repeat: no-repeat;
+    position:absolute;
+    top: 0;
+    bottom: 5px;
+    right: 0;
+    left: 0;
+}
+.wlc{
+
+    font-family: IndieFlower;
+    font-size:100px;
+    font-weight: 100;
+    color: rgb(21, 19, 97);
+}
+
+.btn {
+    cursor: pointer;
+    background: #ecf0ee;
+    border-radius: 15px;
+    font-family: Kdam Thmor Pro;
+    font-style: regular;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 9px 23px 9px 23px;
+    text-decoration: none;
+    position:relative;
+    margin-top: 5%;
+  }
+  
+  .btn:hover {
+      color:aqua ;
+  }

@@ -1,0 +1,12 @@
+.navOptions{
+    background-image: url('../assets/foto1.jpg');
+    display: flex;
+    background-size: 100%;
+    align-items:center;
+    /* padding: 30px; */
+    justify-content: center;
+    grid-template-columns: 25% 25% 25% 25%;
+    gap: 20px;
+   
+  
+}
