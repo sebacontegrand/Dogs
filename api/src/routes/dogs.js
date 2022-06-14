@@ -3,7 +3,7 @@ const { allDogsFromEverywhere } = require('../API/index');
 const { Dog, Temperament } = require('../db');
 const router = express.Router();
 const axios = require('axios');
-// GET para traer todos los perros
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // GET para traer todos los perros
@@ -25,7 +25,7 @@ try{
 }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////
-// GET para traer un perro por su id
+// GET Dog by ID
 router.get('/:idBreed', async (req, res, next) => {
   try {
     const { idBreed } = req.params;
@@ -41,7 +41,7 @@ router.get('/:idBreed', async (req, res, next) => {
 }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////
-// POST para crear un perro
+// POST create a Dog
 router.post('/new' , async (req, res, next) => {
   
       var {
@@ -79,7 +79,7 @@ router.post('/new' , async (req, res, next) => {
             createdInDB:createdInDB,
             image:image || 'https://dog.ceo/api/breeds/image/random'
         });
-        res.status(201).json(createDog)
+       
         temperament.map(async el => {
           const findTemperament = await Temperament.findAll({
               where: { name: el }

@@ -1,8 +1,10 @@
 import React from 'react'
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import NavBar from '../Components/NavBar'
+import { useDispatch, useSelector } from 'react-redux';
+import NavBar from '../Components/NavBar';
 import { postDog, loadTempAction } from '../redux/actions';
+import styles from './DogCreation.module.css'
+import {Link} from 'react-router-dom'
 
 function validateForm(input){
     // Error handling
@@ -112,11 +114,13 @@ function handleSelect(e) {
   return (
     <> 
     <NavBar/>
-    <div>DogCreation</div>
+    <div className={styles.mainContainerCreation}>DogCreation</div>
     <form onSubmit={((e)=>handleOnSubmit(e))}>
           <label>Create New Dog and Add to Database</label>
+          <div className={styles.formContainer}>
+          <div className={styles.Section}>
           <label>Name</label>
-          <input type="text" onChange={(e)=>handleOnChange(e)} placeholder="Name..." name="name" value={input.name}/>
+          <input type="text" onChange={(e)=>handleOnChange(e)} placeholder="American Bulldog..." name="name" value={input.name}/>
           <label>Image</label>
           <input type="url" onChange={(e)=>handleOnChange(e)} placeholder="http://image.com" name="image" value={input.image}/> 
           <label>Max-Height</label>
@@ -129,23 +133,32 @@ function handleSelect(e) {
           <input type="number" onChange={(e)=>handleOnChange(e)} placeholder="4" name="weight_min" value={input.weight_min}/>
           <label>Life-Span</label>
           <input type="text" onChange={(e)=>handleOnChange(e)} placeholder="Life_span..." name="life_span" value={input.life_span}/>
-      
-      <select onChange={(e)=>handleSelect(e)}> 
+      </div>
+      <select onChange={(e)=>handleSelect(e)} className={styles.styled_select}> 
                 {temperamentx?.map((temp) => {
                   return (<option key={temp.id} name={temp.name}>{temp.name}</option>);
                 })}
       </select>  
-                 <div className="">
+                 <div className={styles.sidebar_box}>
                  <h4>Temperament Selection:</h4>
                  {input.temperament.map((el) => (
-                 <div key={el} className="">
+                 <div key={el} className={styles.selectedItems}>
                  <p>{el}</p>
      <button onClick={() => 
                  handleDelete(el)}>Delete[x]</button>
                  </div>
                  ))}
                  </div>
-     <button type="submit"  >Add Dog.!</button>
+     
+     <div className={styles.buttonSection}>
+              <Link to="/home">
+                <button className={styles.buttonCancel}>Home</button>
+              </Link>
+              <button className={styles.button} type="submit">
+                CREATE DOG 
+              </button>
+              </div>
+    </div>
     </form>
     
     </>

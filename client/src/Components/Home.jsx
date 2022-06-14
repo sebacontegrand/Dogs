@@ -1,11 +1,12 @@
 
 import React, {useEffect} from 'react'
-import DogCards from './DogCards'
+import Dog from './Dog'
 import styles from './Home.module.css'
 import { useDispatch, useSelector } from "react-redux";
 
 import {loadedDogsAction, loadTempAction } from '../redux/actions'
 import NavBar from './NavBar';
+import Filters from './Filters';
 
 
 function Home() {
@@ -29,10 +30,15 @@ function Home() {
   
   return (
     <> 
-    <NavBar/>
-      <div className={styles.bkg}>
-        <DogCards />
+    <div className={styles.bkg}>
+        
+          <NavBar/>
+          <div className={styles.mainContainer}>
+          <Filters/>
+          <Dog/>
+        </div>
       </div>
+    
     </>
    
   )

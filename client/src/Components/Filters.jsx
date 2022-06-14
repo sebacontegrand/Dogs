@@ -1,0 +1,192 @@
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {loadedDogsAction, loadTempAction, getBreedsAction, getDogsByBreed, orderByName, filteredDogsByTemperament, filteredCreated, filterByMAXWeight, filterByMINWeight, orderByWeight } from '../redux/actions'
+
+
+export default function Filters() {
+    const dispatch = useDispatch();
+    const temperaments = useSelector((state) => state.temperaments).sort(
+        function (a, b) {
+          if (a < b) return -1;
+          else return 1;
+        }
+      );
+    const dogs = useSelector((state) => state.dogs);
+    const breeds = useSelector((state) => state.breeds);
+
+
+  
+  const maxWeights = dogs
+    .map((el) => el.weight_max)
+    .sort(function (a, b) {
+      return a - b;
+    });
+  const allDogsMaxWeights = [...new Set(maxWeights)];
+  
+  const minWeights = dogs
+  .map((el) => el.weight_min)
+  .sort(function (a, b) {
+    return a - b;
+  });
+const allDogsMinWeights = [...new Set(minWeights)];
+
+    useEffect(() => {
+        dispatch(loadedDogsAction());
+        dispatch(loadTempAction());
+        dispatch(getBreedsAction());
+      }, [dispatch]);
+    
+      function handleClick(e) {
+        e.preventDefault();
+        dispatch(loadedDogsAction());
+      }
+      
+      function handleClickOrder(e) {
+        e.preventDefault();
+        dispatch(orderByName(e.target.value));
+      }
+      function handleClickOrderWeight(e) {
+        e.preventDefault();
+        dispatch(orderByWeight(e.target.value));
+      }
+      function handleFilteredByTemp(e) {
+        e.preventDefault();
+        dispatch(filteredDogsByTemperament(e.target.value));
+      }
+      function handleFilterCreated(e) {
+        dispatch(filteredCreated(e.target.value));
+      }
+      function handleMAXWeight(e) {
+        e.preventDefault();
+        dispatch(filterByMAXWeight(e.target.value));
+      }
+      function handleMINWeight(e) {
+        e.preventDefault();
+        dispatch(filterByMINWeight(e.target.value));
+      }
+      
+      function handleByBreed(e) {
+        e.preventDefault();
+        dispatch(getDogsByBreed(e.target.value));
+      }
+      return(
+        <>
+          <div className=''>
+            <div className=''>
+              <h4 className=''> Find Dogs-Filters:</h4>
+              <div
+                className=''
+                onClick={(e) => {
+                  handleClick(e);
+                }}
+              >
+                <span className=''>loop</span>
+              </div>
+            </div>
+            <hr />
+            <div className=''>
+              <h5 className=''>Order by name</h5>
+              <select
+                onChange={(e) => {
+                  handleClickOrder(e);
+                }}
+              >
+                <option defaultValue value="all" hidden>
+                  Order
+                </option>
+                <option value="asc">A - Z</option>
+                <option value="desc">Z - A</option>
+              </select>
+            </div>
+            <div className=''>
+          <h5 className=''>Order by weight</h5>
+          <select
+            onChange={(e) => {
+              handleClickOrderWeight(e);
+            }}
+          >
+            <option defaultValue value="all" hidden>
+              Order
+            </option>
+            <option value="asc">Heavy</option>
+            <option value="desc">Light</option>
+          </select>
+        </div>
+            <div className=''>
+          <h5 className=''>Filter by temperament</h5>
+          <select onChange={(e) => handleFilteredByTemp(e)}>
+            <option value="all">All Temperaments</option>
+            {temperaments.map((temp) => {
+              return (
+                <option value={temp} key={temp.id}>
+                  {temp.name}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className=''>
+          <h5 className=''>Filter by source</h5>
+          <select
+            onChange={(e) => {
+              handleFilterCreated(e);
+            }}
+          >
+            <option defaultValue value="all">
+              All DOGS
+            </option>
+            <option value="created">ALL</option>
+            <option value="inDB">In dbase</option>
+          </select>
+        </div>
+        <div className=''>
+          <h5 className=''>Filter by Max Weight</h5>
+          <select onChange={(e) => handleMAXWeight(e)}>
+            <option value="all">Max Weights</option>
+            {allDogsMaxWeights.map((Weight) => {
+              return Weight ? (
+                <option value={Weight} key={Weight.id}>
+                  {Weight} kg
+                </option>
+              ) : (
+                ""
+              );
+            })}
+          </select>
+        </div>
+        <div className=''>
+          <h5 className=''>Filter by Min Weight</h5>
+          <select onChange={(e) => handleMINWeight(e)}>
+            <option value="all">Min Weights</option>
+            {allDogsMinWeights.map((Weight) => {
+              return Weight ? (
+                <option value={Weight} key={Weight.id}>
+                  {Weight} kg
+                </option>
+              ) : (
+                ""
+              );
+            })}
+          </select>
+        </div>
+        <div className=''>
+          <h5 className=''>Filter by breed</h5>
+          <select onChange={(e) => handleByBreed(e)}>
+            <option value="all">All Breeds</option>
+            {breeds.map((breed) => {
+              return breed ? (
+                <option value={breed} key={breed.id}>
+                  {breed}
+                </option>
+              ) : (
+                ""
+              );
+            })}
+          </select>
+        </div>
+            </div>
+           
+    </>
+)
+}

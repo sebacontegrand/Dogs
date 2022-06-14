@@ -12,7 +12,17 @@ import { ADD_DOG,
     LOADING_TEMPERAMENT_SUCCESS,
     LOADING_TEMPERAMENT_ERROR,
     GET_DOG_BY_NAME,
-    GET_DOG_BY_ID
+    GET_DOG_BY_ID,
+    GET_DOGS_BY_BREED,
+    GET_BREEDS,
+    ORDER_BY_NAME,
+    ORDER_BY_WEIGHT,
+    GET_DOGS_BY_TEMP,
+    FILTER_CREATED,
+    FILTER_BY_MAX_WEIGHT,
+    FILTER_BY_MIN_WEIGHT
+
+
    } from "./types"
 
 export function getDogsByName(name){
@@ -133,3 +143,71 @@ const loadTempError = () => ({
     type: LOADING_TEMPERAMENT_ERROR,
     payload: true
 })
+
+export function getDogsByBreed(payload) {
+    return async function (dispatch) {
+        try {
+            const answer = await axios.get(`http://localhost:3001/breeds?breedGroup=${payload}`);
+            return dispatch({
+                type: GET_DOGS_BY_BREED,
+                payload: answer.data
+            })
+        } catch (error) {
+            console.log(error, "Error on the filters in actions file")
+        }
+    }
+}
+
+export function getBreedsAction() {
+    return async function (dispatch) {
+        const answer = await axios.get('http://localhost:3001/breeds');
+        console.log('GET BREED',GET_BREEDS)
+        return dispatch({
+            type: GET_BREEDS,
+            payload: answer.data
+        });
+    }
+}
+export function orderByName(payload) {
+    return {
+        type: ORDER_BY_NAME,
+        payload
+    }
+}
+export function filteredDogsByTemperament(payload) {
+    return async function (dispatch) {
+        try {
+            let answer = await axios.get(`http://localhost:3001/dogs/?temperament=${payload}`);
+            return dispatch({
+                type: GET_DOGS_BY_TEMP,
+                payload: answer.data
+            })
+        } catch (error) {
+            console.log(error, "Error on the filters in actions file")
+        }
+    }
+}
+export function filteredCreated(payload) {
+    return {
+        type: FILTER_CREATED,
+        payload
+    }
+}
+export function filterByMAXWeight(payload) {
+    return {
+        type: FILTER_BY_MAX_WEIGHT,
+        payload
+    }
+}
+export function filterByMINWeight(payload) {
+    return {
+        type: FILTER_BY_MIN_WEIGHT,
+        payload
+    }
+}
+export function orderByWeight(payload) {
+    return {
+        type: ORDER_BY_WEIGHT,
+        payload
+    }
+}
