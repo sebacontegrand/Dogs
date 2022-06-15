@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 import styles from './NavBar.module.css'
 import { SearchBar } from './SearchBar';
-
 export default function NavBar(){
 
    
@@ -10,31 +9,37 @@ export default function NavBar(){
     return(
 <>
 
-<nav className={styles.navOptions} >
-   
-   
-    <h1>Hey...This is a DOG...</h1>
-    
-    <ul>
-        <li>
-            <Link to={'/'}>Landing_Page   </Link>     
-        </li>
-        <li>
-            <Link to={'/Home'}>HOME</Link>
-        </li>
-        <li>
-            <SearchBar/>
-        </li>
-        
-        <li>
-            <Link  to='/dogs/new'>NEW DOG</Link>
-        </li>
+<div className={styles.nav} >
+   <div className={styles.TitleAndSearchBar}>
        
-        <li>
+<div className={styles.logoAndTitle}>Hey...DOG...</div>
+    
+    
+        <div>
+            <Link to={'/'}>o  </Link>     
+        </div>
+        <div>
+            <Link to={'/Home'}>HOME
+            
+            </Link>
+        </div>
+        <div>
+            <SearchBar/>
+        </div>
+        <div>o   </div>
+        </div>
+        <div>
+            <Link  to='/dogs/new'>NEW DOG</Link>
+        </div>
+
+   
+    
+       
+        <div className={styles.aboutNavButton}>
             <Link  to={'/about'}>    About   </Link>
-        </li>
-    </ul>
-</nav>
+        </div>
+    
+</div>
 
 </>
     )

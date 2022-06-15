@@ -11,10 +11,10 @@ const {allDogsFromEverywhere} = require('../API/index');
 
 router.get('/', async (req, res) => {
 
-    const allDogs = await axios.get(URL);
+    const allDogx = await axios.get(URL);
     try {
         
-        let everyTemperament = allDogs.data.map(dog => dog.temperament ? dog.temperament : "No info").map(dog => dog?.split(', '));
+        let everyTemperament = allDogx.data.map(dog => dog.temperament ? dog.temperament : "No info").map(dog => dog?.split(', '));
         let everyTemperament2 = everyTemperament.flat();
        
         everyTemperament2.forEach(el => {
@@ -31,5 +31,16 @@ router.get('/', async (req, res) => {
     }
 });
     
+router.get('/dog/', async (req, res) => {
+    const temperament = req.query.temperament;
+    console.log(temperament)
+    const everyDog = await allDogsFromEverywhere();
+    const dogSearchResult = everyDog.filter((dog) => {
+    temperament === 'all'? everyDog : (dog.temperament.toLowerCase()).includes(temperament.toLowerCase()) 
+    });
+    console.log(everyDog)
+    res.status(200).json(dogSearchResult)
+    console.log(dogSearchResult)
+});
 
 module.exports = router

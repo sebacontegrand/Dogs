@@ -15,8 +15,8 @@ const dogsFromAPI = async () => {
             breed_group: e.breed_group,
             temperament: e.temperament,
             life_span: e.life_span,
-            weight_min: e.weight.metric,
-            weight_max: e.weight.metric,
+            weight_min: parseInt(e.weight.metric.slice(0, 2).trim()),
+            weight_max: parseInt(e.weight.metric.slice(4).trim()),
             height_min: e.height.metric,
             height_max: e.height.metric,
         };

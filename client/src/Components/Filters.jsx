@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {loadedDogsAction, loadTempAction, getBreedsAction, getDogsByBreed, orderByName, filteredDogsByTemperament, filteredCreated, filterByMAXWeight, filterByMINWeight, orderByWeight } from '../redux/actions'
-
+import styles from './Filters.module.css'
 
 export default function Filters() {
     const dispatch = useDispatch();
@@ -12,9 +12,11 @@ export default function Filters() {
           else return 1;
         }
       );
+      console.log("temperaments",temperaments)
     const dogs = useSelector((state) => state.dogs);
+    console.log('dogs',dogs)
     const breeds = useSelector((state) => state.breeds);
-
+console.log('breed',breeds)
 
   
   const maxWeights = dogs
@@ -72,21 +74,21 @@ const allDogsMinWeights = [...new Set(minWeights)];
       }
       return(
         <>
-          <div className=''>
-            <div className=''>
-              <h4 className=''> Find Dogs-Filters:</h4>
+          <div className={styles.side}>
+            <div className={styles.sideBarHeaders}>
+              <h4 className={styles.header}> Find Filters:</h4>
               <div
-                className=''
+                className={styles.tooltip}
                 onClick={(e) => {
                   handleClick(e);
                 }}
               >
-                <span className=''>loop</span>
+                <span className="material-icons refresh">Dogs</span>
               </div>
             </div>
             <hr />
-            <div className=''>
-              <h5 className=''>Order by name</h5>
+            <div className={styles.filterSection}>
+              <h5 className={styles.filterHeader}>Order by name</h5>
               <select
                 onChange={(e) => {
                   handleClickOrder(e);
@@ -99,8 +101,8 @@ const allDogsMinWeights = [...new Set(minWeights)];
                 <option value="desc">Z - A</option>
               </select>
             </div>
-            <div className=''>
-          <h5 className=''>Order by weight</h5>
+            <div className={styles.filterSection}>
+          <h5 className={styles.filterHeader}>Order by weight</h5>
           <select
             onChange={(e) => {
               handleClickOrderWeight(e);
@@ -113,21 +115,22 @@ const allDogsMinWeights = [...new Set(minWeights)];
             <option value="desc">Light</option>
           </select>
         </div>
-            <div className=''>
-          <h5 className=''>Filter by temperament</h5>
+            <div className={styles.filterSection}>
+          <h5 className={styles.filterHeader}>Filter by temperament</h5>
           <select onChange={(e) => handleFilteredByTemp(e)}>
             <option value="all">All Temperaments</option>
             {temperaments.map((temp) => {
+              console.log(temp)
               return (
-                <option value={temp} key={temp.id}>
+                <option value={temp.name} key={temp.id}>
                   {temp.name}
                 </option>
               );
             })}
           </select>
         </div>
-        <div className=''>
-          <h5 className=''>Filter by source</h5>
+        <div className={styles.filterSection}>
+          <h5 className={styles.filterHeader}>Filter by source</h5>
           <select
             onChange={(e) => {
               handleFilterCreated(e);
@@ -136,18 +139,18 @@ const allDogsMinWeights = [...new Set(minWeights)];
             <option defaultValue value="all">
               All DOGS
             </option>
-            <option value="created">ALL</option>
+            {/* <option value="created">ALL</option> */}
             <option value="inDB">In dbase</option>
           </select>
         </div>
-        <div className=''>
-          <h5 className=''>Filter by Max Weight</h5>
+        <div className={styles.filterSection}>
+          <h5 className={styles.filterHeader}>Filter by Max Weight</h5>
           <select onChange={(e) => handleMAXWeight(e)}>
             <option value="all">Max Weights</option>
-            {allDogsMaxWeights.map((Weight) => {
-              return Weight ? (
-                <option value={Weight} key={Weight.id}>
-                  {Weight} kg
+            {allDogsMaxWeights.map((maxWeights) => {
+              return maxWeights ? (
+                <option value={maxWeights} key={maxWeights}>
+                  {maxWeights} kg
                 </option>
               ) : (
                 ""
@@ -155,14 +158,14 @@ const allDogsMinWeights = [...new Set(minWeights)];
             })}
           </select>
         </div>
-        <div className=''>
-          <h5 className=''>Filter by Min Weight</h5>
+        <div className={styles.filterSection}>
+          <h5 className={styles.filterHeader}>Filter by Min Weight</h5>
           <select onChange={(e) => handleMINWeight(e)}>
             <option value="all">Min Weights</option>
-            {allDogsMinWeights.map((Weight) => {
-              return Weight ? (
-                <option value={Weight} key={Weight.id}>
-                  {Weight} kg
+            {allDogsMinWeights.map((minWeights) => {
+              return minWeights ? (
+                <option value={minWeights} key={minWeights}>
+                  {minWeights} kg
                 </option>
               ) : (
                 ""
@@ -170,13 +173,13 @@ const allDogsMinWeights = [...new Set(minWeights)];
             })}
           </select>
         </div>
-        <div className=''>
-          <h5 className=''>Filter by breed</h5>
+        <div className={styles.filterSection}>
+          <h5 className={styles.filterHeader}>Filter by breed</h5>
           <select onChange={(e) => handleByBreed(e)}>
             <option value="all">All Breeds</option>
             {breeds.map((breed) => {
               return breed ? (
-                <option value={breed} key={breed.id}>
+                <option value={breed} key={breed}>
                   {breed}
                 </option>
               ) : (
@@ -185,6 +188,7 @@ const allDogsMinWeights = [...new Set(minWeights)];
             })}
           </select>
         </div>
+        
             </div>
            
     </>

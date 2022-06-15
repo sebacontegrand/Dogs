@@ -94,13 +94,13 @@ export default function rootReducer(state=initialState, action){
                     breeds: action.payload
                         }
         case GET_DOGS_BY_BREED:
-            const alldogx = state.dogs
-                if (action.payload === 'all') return alldogx
-                return {
-                    ...state,
-                    alldogx: action.payload,
-                    dogs:alldogx
-                        }
+            const filterBreed = action.payload ==='all'? [...state.alldogx]:
+            state.alldogx.filter(e => e.breed_group === action.payload)
+            return{
+                ...state,
+                dogs: filterBreed
+            }
+            
         case ORDER_BY_NAME:
             const sortedArr = action.payload === 'asc' ?
                     [...state.dogs].sort(function (a, b) {
@@ -119,10 +119,21 @@ export default function rootReducer(state=initialState, action){
                             }
 
         case GET_DOGS_BY_TEMP:
-                return {
-                    ...state,
-                    dogs: action.payload,
-                        }
+            console.log('actions',action.payload)
+            const filterTemp = action.payload ==='all'? [...state.alldogx]:
+            state.alldogx.filter(e => {
+            console.log('e',e.temperament)
+            console.log('action',action.payload)
+               return  e.temperament.includes(action.payload)
+            })
+                
+            
+            return{
+                ...state,
+                dogs: filterTemp
+            }
+
+
         case FILTER_CREATED:
             const createdFilter = action.payload === 'created' ?
                     state.dogs.filter(e => e.createdInDB === true) :
@@ -132,23 +143,28 @@ export default function rootReducer(state=initialState, action){
                             dogs: createdFilter,
                             }
 
+
+
+
+
+
         case FILTER_BY_MAX_WEIGHT:
             const everyDog = state.dogs
-            const MAXFiltered = action.payload === 'all' ?
+            const maxFiltered = action.payload === 'all' ?
                 everyDog :
-                everyDog.filter(el => el.weight_max <= action.payload)
+                everyDog.filter(el => el.weight_max <= Number(action.payload))
             return {
                 ...state,
-                dogs: MAXFiltered
+                dogs: maxFiltered
             }
         case FILTER_BY_MIN_WEIGHT:
             const allDoguis = state.dogs
-            const weightMINFiltered = action.payload === 'all' ?
+            const minFiltered = action.payload === 'all' ?
                 allDoguis :
-                allDoguis.filter(el => el.weight_min >= action.payload)
+                allDoguis.filter(el => el.weight_min >= Number(action.payload))
             return {
                 ...state,
-                dogs: weightMINFiltered
+                dogs: minFiltered
             }
             
         case ORDER_BY_WEIGHT:

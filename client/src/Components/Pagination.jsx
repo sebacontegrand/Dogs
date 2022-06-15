@@ -15,6 +15,7 @@ export default function Pagination({dogsPerPage, dogs, pagination, currentPage})
                     pageNumbers.map(number => (
                         <li className={styles.number}  key={number}>
                             <div className={currentPage === number? styles.crumb__active : styles.crumb} onClick={()=> pagination(number)}>{number}</div>
+                            
                         </li>
                     ))
                 }

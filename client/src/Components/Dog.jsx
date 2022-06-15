@@ -14,6 +14,7 @@ export default function Dog() {
   const indexOfLastDog = currentPage * dogsPerPage;
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = dogs.slice(indexOfFirstDog, indexOfLastDog);
+  console.log('currentDogs',currentDogs)
   const pagination = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -35,14 +36,16 @@ export default function Dog() {
         {
           
           currentDogs.map((el) => { 
-            
+            console.log(el)
             return  (
           <DogCards
           key={el.id}
             id={el.id}
             name={el.name}
             image={el.image}
-            weight={el.weight_min}
+            weightmin={el.weight_min}
+            weightmax={el.weight_max}
+            temperamentsArray={el.Temperaments}
             temperament={el.temperament}/>
         )})}
       </div>

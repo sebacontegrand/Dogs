@@ -1,10 +1,9 @@
 
 import { Link } from "react-router-dom";
 import styles from "./DogCards.module.css";
-export default function DogCard( { id, name, image, weight, temperament } ) {
+export default function DogCard( { id, name, image, weightmin, weightmax, temperamentsArray, temperament } ) {
   
     return (
-    
       <>
         <div className={styles.dogCard}>
           <Link to={"/dogs/" + id}>
@@ -13,18 +12,22 @@ export default function DogCard( { id, name, image, weight, temperament } ) {
             </div>
             <div className={styles.infoArea}>
               <div className={styles.tempArea}>
-                <h5 className=''>Weight:{weight}Kg</h5>
-              {temperament ? (
-                  <h5 className={styles.dogTemp}>Temperament: {temperament}</h5>
-                ) : (
-                  <br />
+                <h5 className=''>Weight_max:{weightmax}kg</h5>
+                <h5 className=''>Weight_min:{weightmin}kg</h5>
+                {temperament && (
+                  <h5 className={styles.dogTemp}>Temperaments: {temperament}</h5>
                 )}
+                {temperamentsArray && (
+                  <h5>{temperamentsArray.map(el => <span key={el.name}>{el.name}, </span>)}</h5>
+                )
+
+                }
               </div>
               <div className={styles.imageArea}>
                 <img
                   className={styles.dogImage}
                   src={image}
-                  alt={`A dog`}
+                  alt={`dog`}
                   height="250px"
                 />
               </div>
@@ -33,5 +36,5 @@ export default function DogCard( { id, name, image, weight, temperament } ) {
         </div>
       </>
     );
-  }
+  } 
 

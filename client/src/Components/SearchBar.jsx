@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {getDogsByName} from '../redux/actions'
-
+import styles from './SearchBar.module.css'
 
 export const SearchBar = () => {
 
@@ -21,16 +21,17 @@ function handleSubmit(e){
 }
 
   return (
-    <div>SearchBar
+    <div className={styles.searchBarObject}>SearchBar
         <form onSubmit={handleSubmit}>
-            <input 
+            <input
+                className={styles.input} 
                 type="text" 
                 onChange={(e)=> setDogState(e.target.value)} 
                 value={dogState} 
                 id="dog"
                 name="dog"
                 placeholder = "Search a Dog..."/>
-            <button type="submit" ></button>
+            <button className={styles.button} type="submit" ></button>
         </form>
     </div>
   )

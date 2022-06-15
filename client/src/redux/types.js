@@ -12,7 +12,7 @@ export const LOADING_TEMPERAMENT_ERROR = 'LOADING_TEMPERAMENT_ERROR';
 
 export const GET_DOG_BY_NAME = 'GET_DOG_BY_NAME';
 export const GET_DOG_BY_ID = 'GET_DOG_BY_ID';
-export const GET_DOGS_BY_BREED = 'GET_DOG_BY_ID';
+export const GET_DOGS_BY_BREED = 'GET_DOG_BY_BREED';
 export const GET_BREEDS = 'GET_BREEDS';
 export const ORDER_BY_NAME = 'ORDER_BY_NAME';
 export const GET_DOGS_BY_TEMP = 'GET_DOGS_BY_TEMP';

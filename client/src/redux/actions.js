@@ -144,19 +144,15 @@ const loadTempError = () => ({
     payload: true
 })
 
-export function getDogsByBreed(payload) {
-    return async function (dispatch) {
-        try {
-            const answer = await axios.get(`http://localhost:3001/breeds?breedGroup=${payload}`);
-            return dispatch({
-                type: GET_DOGS_BY_BREED,
-                payload: answer.data
-            })
-        } catch (error) {
-            console.log(error, "Error on the filters in actions file")
-        }
+export function getDogsByBreed(breed) {
+    return async(dispatch) =>{
+        dispatch({
+            type: GET_DOGS_BY_BREED,
+            payload:breed
+        })
     }
 }
+
 
 export function getBreedsAction() {
     return async function (dispatch) {
@@ -174,18 +170,30 @@ export function orderByName(payload) {
         payload
     }
 }
-export function filteredDogsByTemperament(payload) {
-    return async function (dispatch) {
-        try {
-            let answer = await axios.get(`http://localhost:3001/dogs/?temperament=${payload}`);
-            return dispatch({
-                type: GET_DOGS_BY_TEMP,
-                payload: answer.data
-            })
-        } catch (error) {
-            console.log(error, "Error on the filters in actions file")
-        }
+export function filteredDogsByTemperament(temp) {
+    console.log('temp',temp)
+    return async(dispatch) =>{
+        dispatch({
+            type: GET_DOGS_BY_TEMP,
+            payload:temp
+        })
     }
+    
+    
+    
+    // return async function (dispatch) {
+    //     try {
+    //         let answer = await axios.get(`http://localhost:3001/temperaments/dog/?temperament=${payload}`);
+    //         console.log('dogsbyTemp',GET_DOGS_BY_TEMP)
+            
+    //         return dispatch({
+    //             type: GET_DOGS_BY_TEMP,
+    //             payload: answer.data
+    //         })
+    //     } catch (error) {
+    //         console.log(error, "Error on the filters in actions file")
+    //     }
+    // }
 }
 export function filteredCreated(payload) {
     return {
