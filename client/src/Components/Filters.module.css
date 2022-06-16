@@ -3,14 +3,14 @@
     flex-direction: row;
     background-color: rgba(20, 17, 102, 0.645);
     color: #fff;
-    top: 5%;
+    top: 2%;
     left: 2%;
     margin: 100px 5px;
     margin-left: 3%;
-    padding: 10px;
+    padding: 20px;
     border-radius: 12px;
-    min-width: 200px;
-    height: fit-content;
+    width: 30cm;
+    
     position:relative;
   }
   
@@ -23,7 +23,8 @@
   }
   
   .header {
-    margin: 0 10px;
+    margin: 0 5px;
+    align-content: space-around;
   }
   .refresh:hover {
     color: white;
@@ -40,7 +41,7 @@
   .tooltip .tooltiptext {
     font-size: 18px;
     top: -05px;
-    left: 120%;
+    left: 100%;
     visibility: hidden;
     width: 120px;
     background-color: black;
@@ -60,7 +61,7 @@
   }
   
   .filterSection {
-    margin: 8px 5px;
+    margin: 10px 10px;
   }
   
   .filterHeader {
@@ -72,7 +73,7 @@
   }
   
   .addDog {
-    margin-top: 10px;
+    margin-top: 5px;
     display: flex;
     flex-direction: row;
     justify-content: center;

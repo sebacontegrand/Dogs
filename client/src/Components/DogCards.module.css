@@ -18,7 +18,7 @@
 
   .dogCard:hover{
     transform: scale(1.02,1.02);
-    box-shadow: 6px 7px 8px 3px rgba(255, 255, 255, 0.7);
+    box-shadow: 6px 7px 8px 3px rgba(71, 161, 75, 0.7);
   }
 
   .dogName{

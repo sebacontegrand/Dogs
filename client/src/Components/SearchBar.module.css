@@ -1,22 +1,21 @@
 .searchBarObject {
+ 
     margin: 2px;
     font-size: 20px;
     display: flex;
+    width: 650px;
     justify-content: center;
     align-items: center;
   }
   
   .input{
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    line-height: 1.8;
-    margin-top: 10px;
+
+    border-radius:1cm;
   }
   
   button{
+    background-color: rgb(73, 154, 27);
+
     margin: 5px;
     padding: 5px;
     border-radius: 15px;

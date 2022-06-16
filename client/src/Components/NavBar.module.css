@@ -1,33 +1,28 @@
 .nav {
     color: #fff;
-    background-color: rgba(13, 11, 67, 0.683);
+    background-color: rgba(17, 16, 59, 0.791);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
     width: 100%;
     z-index: 1;
     position: fixed;
     font-weight: bolder;
+    font-size: 24px;
   }
   
-  .logoAndTitle {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-    font-size: 20px;
-  }
+
   .TitleAndSearchBar {
-    margin-left: 10%;
-    width: 75%;
+
+    margin-left: 5%;
+    width: 70%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-size: 20px;
+    font-size: 24px;
     font-style: italic;
   }
   .aboutNavButton {

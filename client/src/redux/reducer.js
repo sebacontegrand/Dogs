@@ -120,18 +120,18 @@ export default function rootReducer(state=initialState, action){
 
         case GET_DOGS_BY_TEMP:
             console.log('actions',action.payload)
+            
             const filterTemp = action.payload ==='all'? [...state.alldogx]:
             state.alldogx.filter(e => {
-            console.log('e',e.temperament)
-            console.log('action',action.payload)
-               return  e.temperament.includes(action.payload)
+               
+                return  e.temperament?.includes(action.payload)
+               
             })
-                
-            
             return{
                 ...state,
                 dogs: filterTemp
             }
+    
 
 
         case FILTER_CREATED:

@@ -6,7 +6,7 @@ import LandingPage from './Components/LandingPage';
 import Home from './Components/Home'
 import {DogCreation} from './Components/DogCreation';
 import DogDetail from './Components/DogDetail';
-import {About} from './Components/About';
+import {Quotes} from './Components/Quotes';
 function App() {
   return (
     
@@ -17,7 +17,7 @@ function App() {
             <Route exact path='/Home' element={<Home/>}/> 
             <Route path={'/dogs/new'} element={<DogCreation/>}/>  
             <Route path={'/dogs/:id'} element={<DogDetail/>}/>  
-            <Route path={'/about'} element={<About/>}/>      
+            <Route path={'/quotes'} element={<Quotes/>}/>      
         </Routes>
       </React.StrictMode>
     </div>

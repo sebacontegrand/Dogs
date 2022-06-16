@@ -72,6 +72,9 @@ const allDogsMinWeights = [...new Set(minWeights)];
         e.preventDefault();
         dispatch(getDogsByBreed(e.target.value));
       }
+      const handleReload = () => {
+        window.location.reload();
+      };
       return(
         <>
           <div className={styles.side}>
@@ -85,10 +88,11 @@ const allDogsMinWeights = [...new Set(minWeights)];
               >
                 <span className="material-icons refresh">Dogs</span>
               </div>
+              <div><button type='button'onClick={() => handleReload()}>Refresh </button></div>
             </div>
             <hr />
             <div className={styles.filterSection}>
-              <h5 className={styles.filterHeader}>Order by name</h5>
+              <h5 className={styles.filterHeader}>Alphabetical Order by Name</h5>
               <select
                 onChange={(e) => {
                   handleClickOrder(e);
@@ -102,21 +106,21 @@ const allDogsMinWeights = [...new Set(minWeights)];
               </select>
             </div>
             <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>Order by weight</h5>
+          <h5 className={styles.filterHeader}>By weight</h5>
           <select
             onChange={(e) => {
               handleClickOrderWeight(e);
             }}
           >
             <option defaultValue value="all" hidden>
-              Order
+              All
             </option>
-            <option value="asc">Heavy</option>
-            <option value="desc">Light</option>
+            <option value="asc">Heavier</option>
+            <option value="desc">Lighter</option>
           </select>
         </div>
             <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>Filter by temperament</h5>
+          <h5 className={styles.filterHeader}>By temperament</h5>
           <select onChange={(e) => handleFilteredByTemp(e)}>
             <option value="all">All Temperaments</option>
             {temperaments.map((temp) => {
@@ -130,7 +134,7 @@ const allDogsMinWeights = [...new Set(minWeights)];
           </select>
         </div>
         <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>Filter by source</h5>
+          <h5 className={styles.filterHeader}>By source</h5>
           <select
             onChange={(e) => {
               handleFilterCreated(e);
@@ -144,7 +148,7 @@ const allDogsMinWeights = [...new Set(minWeights)];
           </select>
         </div>
         <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>Filter by Max Weight</h5>
+          <h5 className={styles.filterHeader}>By Max Weight</h5>
           <select onChange={(e) => handleMAXWeight(e)}>
             <option value="all">Max Weights</option>
             {allDogsMaxWeights.map((maxWeights) => {
@@ -159,7 +163,7 @@ const allDogsMinWeights = [...new Set(minWeights)];
           </select>
         </div>
         <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>Filter by Min Weight</h5>
+          <h5 className={styles.filterHeader}>By Min Weight</h5>
           <select onChange={(e) => handleMINWeight(e)}>
             <option value="all">Min Weights</option>
             {allDogsMinWeights.map((minWeights) => {
@@ -174,7 +178,7 @@ const allDogsMinWeights = [...new Set(minWeights)];
           </select>
         </div>
         <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>Filter by breed</h5>
+          <h5 className={styles.filterHeader}>By breed</h5>
           <select onChange={(e) => handleByBreed(e)}>
             <option value="all">All Breeds</option>
             {breeds.map((breed) => {

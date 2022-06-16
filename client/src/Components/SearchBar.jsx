@@ -21,7 +21,8 @@ function handleSubmit(e){
 }
 
   return (
-    <div className={styles.searchBarObject}>SearchBar
+    <div className={styles.searchBarObject}>Find a DOG...
+
         <form onSubmit={handleSubmit}>
             <input
                 className={styles.input} 
@@ -30,7 +31,7 @@ function handleSubmit(e){
                 value={dogState} 
                 id="dog"
                 name="dog"
-                placeholder = "Search a Dog..."/>
+                placeholder = "Search..."/>
             <button className={styles.button} type="submit" ></button>
         </form>
     </div>

@@ -12,11 +12,11 @@ export default function NavBar(){
 <div className={styles.nav} >
    <div className={styles.TitleAndSearchBar}>
        
-<div className={styles.logoAndTitle}>Hey...DOG...</div>
+<div className={styles.logoAndTitle}>“Somewhere, a little dog gonna love you.” – ...</div>
     
     
         <div>
-            <Link to={'/'}>o  </Link>     
+            <Link to={'/'}>@</Link>     
         </div>
         <div>
             <Link to={'/Home'}>HOME
@@ -26,7 +26,7 @@ export default function NavBar(){
         <div>
             <SearchBar/>
         </div>
-        <div>o   </div>
+        
         </div>
         <div>
             <Link  to='/dogs/new'>NEW DOG</Link>
@@ -36,7 +36,7 @@ export default function NavBar(){
     
        
         <div className={styles.aboutNavButton}>
-            <Link  to={'/about'}>    About   </Link>
+            <Link  to={'/quotes'}>    Quotes?   </Link>
         </div>
     
 </div>

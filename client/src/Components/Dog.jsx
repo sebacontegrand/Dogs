@@ -4,7 +4,7 @@ import Pagination from "../Components/Pagination";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadedDogsAction } from "../redux/actions";
-import styles from "./Dog.module.css";
+
 
 export default function Dog() {
   const dispatch = useDispatch();
