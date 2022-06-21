@@ -11,21 +11,22 @@ export default function Detail (props){
   console.log(id)
   const dispatch = useDispatch() 
   useEffect (() => {dispatch(getDogsById(id))} ,[dispatch,id]) 
-  const detailsstate = useSelector((state) => state.details)
-  console.log('DETAILS', detailsstate)
-    if(!detailsstate){
+  const detailsState = useSelector((state) => state.details)
+  console.log('DETAILS', detailsState)
+    if(!detailsState){
     return <h1>Loading...</h1>
     }
   return (
         <div>
             <div className={styles.dt}> 
                 <Link to='/Home'><button className={styles.btn}>Back to main Page </button> </Link>
-                <h1 className={styles.title}> {detailsstate.name} </h1>
-                <img className={styles.imga} alt='' src={detailsstate.image || ''}/>
-                <h1 className={styles.type} > Temperament: {detailsstate.temperament}</h1>
-                <h4 className={styles.type}>Height { detailsstate.height_min } [Cm]</h4>
-                <h4 className={styles.type}>Weight {detailsstate.weight_min} [Kg]</h4>
-                <h4 className={styles.type}>Life_Span: {detailsstate.life_span}</h4>
+                <h1 className={styles.title}> {detailsState.name} </h1>
+                <img className={styles.imga} alt='' src={detailsState.image || ''}/>
+                <h1 className={styles.type} > Temperament: {detailsState.temperament}</h1>
+                <h1 className={styles.type} > {detailsState.Temperaments?.map(el => <span key={el.name}>, {el.name}</span>)}</h1>
+                <h4 className={styles.type}>Height: {detailsState.height_min}-{detailsState.height_max} [Cm]</h4>
+                <h4 className={styles.type}>Weight: {detailsState.weight_min}-{detailsState.weight_max} [Kg]</h4>
+                <h4 className={styles.type}>Life_Span: {detailsState.life_span}</h4>
             </div>    
         </div>
     )

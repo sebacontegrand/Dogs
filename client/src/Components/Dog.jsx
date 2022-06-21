@@ -14,18 +14,28 @@ export default function Dog() {
   const indexOfLastDog = currentPage * dogsPerPage;
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = dogs.slice(indexOfFirstDog, indexOfLastDog);
-  console.log('currentDogs',currentDogs)
+  console.log("currentDogs",currentDogs)
+  console.log('currentPage',currentPage)
   const pagination = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  useEffect(() => {
-  dispatch(loadedDogsAction());
-  }, [dispatch]);
+ 
 
+  const handleNext = () => {
+    setCurrentPage(currentPage -1)
+  }
+  const handlePrev = () => {
+    setCurrentPage(currentPage + 1)
+  }
+  useEffect(() => {
+    dispatch(loadedDogsAction());
+    }, [dispatch]);
   return (
     <>
      <div >
+                <button onClick={handleNext}>Next</button>
+                <button onClick={handlePrev}>Prev</button>
         <Pagination
           dogsPerPage={dogsPerPage}
           dogs={dogs.length}
@@ -36,8 +46,9 @@ export default function Dog() {
         {
           
           currentDogs.map((el) => { 
-            console.log(el)
+            
             return  (
+              
           <DogCards
           key={el.id}
             id={el.id}
@@ -45,7 +56,7 @@ export default function Dog() {
             image={el.image}
             weightmin={el.weight_min}
             weightmax={el.weight_max}
-            temperamentsArray={el.Temperaments}
+            temperaments={el.Temperaments}
             temperament={el.temperament}/>
         )})}
       </div>

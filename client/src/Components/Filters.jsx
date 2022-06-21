@@ -6,13 +6,13 @@ import styles from './Filters.module.css'
 
 export default function Filters() {
     const dispatch = useDispatch();
-    const temperaments = useSelector((state) => state.temperaments).sort(
-        function (a, b) {
-          if (a < b) return -1;
-          else return 1;
-        }
-      );
-      console.log("temperaments",temperaments)
+    const temperamentx = useSelector((state) => state.temperaments.sort(
+      function (a, b) {
+        if (a < b) return -1;
+        else return 1;
+      }
+    ));
+     
     const dogs = useSelector((state) => state.dogs);
     console.log('dogs',dogs)
     const breeds = useSelector((state) => state.breeds);
@@ -120,11 +120,11 @@ const allDogsMinWeights = [...new Set(minWeights)];
           </select>
         </div>
             <div className={styles.filterSection}>
-          <h5 className={styles.filterHeader}>By temperament</h5>
+          <h5 className={styles.filterHeader}>By temperaments</h5>
           <select onChange={(e) => handleFilteredByTemp(e)}>
             <option value="all">All Temperaments</option>
-            {temperaments.map((temp) => {
-              console.log(temp)
+            {temperamentx.map((temp) => {
+              
               return (
                 <option value={temp.name} key={temp.id}>
                   {temp.name}
@@ -143,8 +143,8 @@ const allDogsMinWeights = [...new Set(minWeights)];
             <option defaultValue value="all">
               All DOGS
             </option>
-            {/* <option value="created">ALL</option> */}
-            <option value="inDB">In dbase</option>
+            <option value="created">Your Own Dogs </option>
+             {/* <option value="inDB">In dbase</option> */}
           </select>
         </div>
         <div className={styles.filterSection}>

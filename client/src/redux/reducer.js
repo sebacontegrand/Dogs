@@ -72,13 +72,16 @@ export default function rootReducer(state=initialState, action){
                 }
 
         case LOADING_TEMPERAMENT_SUCCESS:
+            console.log('temperaments',action.payload)
                 return{
                     ...state,
                     loading: false,
                     error: null,
                     temperaments: action.payload
                 }
+                
         case GET_DOG_BY_NAME:
+            
                 return {
                     ...state,
                     dogs: action.payload,
@@ -119,25 +122,24 @@ export default function rootReducer(state=initialState, action){
                             }
 
         case GET_DOGS_BY_TEMP:
-            console.log('actions',action.payload)
             
             const filterTemp = action.payload ==='all'? [...state.alldogx]:
             state.alldogx.filter(e => {
-               
-                return  e.temperament?.includes(action.payload)
-               
-            })
+                
+                return  (e.temperament?.includes(action.payload) || e.Temperaments?.map(el=>el.name === action.payload))})
+                
             return{
                 ...state,
                 dogs: filterTemp
+                
             }
     
 
 
         case FILTER_CREATED:
             const createdFilter = action.payload === 'created' ?
-                    state.dogs.filter(e => e.createdInDB === true) :
-                    state.dogs.filter(e => !e.createdInDB);
+                    state.alldogx.filter(e => e.createdInDB === true) :
+                    state.alldogx.filter(e => !e.createdInDB);
                         return {
                             ...state,
                             dogs: createdFilter,

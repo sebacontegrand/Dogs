@@ -13,8 +13,8 @@ function App() {
     <div className="App">
       <React.StrictMode>  
         <Routes>
-            <Route exact path='/' element={<LandingPage/>}/>
-            <Route exact path='/Home' element={<Home/>}/> 
+            <Route path='/' element={<LandingPage/>}/>
+            <Route path='/Home' element={<Home/>}/> 
             <Route path={'/dogs/new'} element={<DogCreation/>}/>  
             <Route path={'/dogs/:id'} element={<DogDetail/>}/>  
             <Route path={'/quotes'} element={<Quotes/>}/>      

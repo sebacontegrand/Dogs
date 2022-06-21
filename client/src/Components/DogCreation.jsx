@@ -12,40 +12,42 @@ function validateForm(input){
   if (input.name === '') {
     errorx.name = "A Name must be typed";
   } else {
-   if(!input.name.match(/^[A-Za-z]+$/)){
+   if(input.name.match(/^[A-Za-z]+$/)){
     errorx.name = "Name must contain letters only";
   }}
   if (!input.weight_min) {
-    errorx.weight_min = "A min Weight number must be typed";
-  } else {
-    if(!input.name.match(!/\d{1,2}/)){
+    errorx.weight_min = "A min Weight number must be typed from 3kg-40kg";
+  } else if(input.name.match(!/\d{1,2}/)){
     errorx.weight_min = "weight must have min values";
-  }}
+  } else {
+    errorx.weight_min = "";
+  }
   if (!input.weight_max) {
-    errorx.weight_max = "Type a valid max weight number";
-  }  else {
-    if(!input.name.match(!/\d{1,2}/)){
+    errorx.weight_max = "Type a valid max weight number from 10kg-80kg";
+  }  else if (input.name.match(!/\d{1,2}/)){
       errorx.weight_max = "weight must have max values";
+    } else{
+      errorx.weight_max = "";
     }
    
-  }
+  
   if (!input.height_min) {
-    errorx.height_min = "Type a valid minimal height number";
-  } else {
-    if(!input.name.match(!/\d{1,2}/)){
+    errorx.height_min = "Type a valid minimal height number from 5cm-40cm";
+  } else if(input.name.match(!/\d{1,2}/)){
       errorx.height_min = "height must have min values";
-    }
+    }else {
+    errorx.height_min = "";
   }
   if (!input.height_max) {
-    errorx.height_max = "Type a valid maxim height number";
-  }else {
-    if(!input.name.match(!/\d{1,2}/)){
+    errorx.height_max = "Type a valid maxim height number from 10cm-60cm";
+  }else if(input.name.match(!/\d{1,2}/)){
       errorx.height_max = "height must have max values";
-    }
+    }else {
+    errorx.height_max = "";
   }
   return errorx;
 
-     }
+}
 
 export const DogCreation = () => {
 
@@ -63,7 +65,7 @@ const[input, setInput] = React.useState({
         weight_max:'',
         weight_min:'',
         life_span:'',
-        temperament:[] 
+        temperament:[]
 });
 const[errorx, setError] = React.useState({});
 
@@ -102,7 +104,7 @@ function handleOnSubmit(e){
         weight_max:'',
         weight_min:'',
         life_span:'',
-        temperament:[]   
+        temperament:[]  
     })}
     
     else{
@@ -135,16 +137,16 @@ function handleSelect(e) {
           <input type="url" onChange={(e)=>handleOnChange(e)} placeholder="http://image.com" name="image" value={input.image}/> 
           <div><p className={styles.error}>{errorx.image}</p></div>
           <label>Max-Height[cm]</label>
-          <input type="number" max="60" min="2" onChange={(e)=>handleOnChange(e)} placeholder="32" name="height_max" value={input.height_max}/>
+          <input type="number" max="60" min="10" onChange={(e)=>handleOnChange(e)} placeholder="32" name="height_max" value={input.height_max}/>
           <div><p className={styles.error}>{errorx.height_max}</p></div>
           <label>Min-Height[cm]</label>
-          <input type="number" max="40" min="0" onChange={(e)=>handleOnChange(e)} placeholder="5" name="height_min" value={input.height_min}/>
+          <input type="number" max="40" min="5" onChange={(e)=>handleOnChange(e)} placeholder="5" name="height_min" value={input.height_min}/>
           <div><p className={styles.error}>{errorx.height_min}</p></div>
           <label>Max-Weight[kg]</label>
-          <input type="number" max="80" min="0" onChange={(e)=>handleOnChange(e)} placeholder="20" name="weight_max" value={input.weight_max}/>
+          <input type="number" max="80" min="10" onChange={(e)=>handleOnChange(e)} placeholder="20" name="weight_max" value={input.weight_max}/>
           <div><p className={styles.error}>{errorx.weight_max}</p></div>
           <label>Min-Weight[kg]</label>
-          <input type="number" max="50" min="0" onChange={(e)=>handleOnChange(e)} placeholder="4" name="weight_min" value={input.weight_min}/>
+          <input type="number" max="40" min="3" onChange={(e)=>handleOnChange(e)} placeholder="4" name="weight_min" value={input.weight_min}/>
           <div><p className={styles.error}>{errorx.weight_min}</p></div>
           <label>Life-Span[years]</label>
           <input type="text" onChange={(e)=>handleOnChange(e)} placeholder="Life_span..." name="life_span" value={input.life_span}/>

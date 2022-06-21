@@ -10,15 +10,15 @@ const axios = require('axios');
 router.get('/', async (req, res) => {
     try {
         const everyDog = await allDogsFromEverywhere();
-        console.log("todosdogs",everyDog)
+        
     const everyBreedGroup = everyDog?.map((dog) => {
         if (!dog.breed_group) {
             "No info"
         }else { return dog.breed_group }
-        console.log("breed_group",dog.breed_group)
+       
     });
     const eachBreedGroup = [...new Set(everyBreedGroup.flat())]
-    console.log('eachBreedGroup',eachBreedGroup)
+    
     res.status(200).json(eachBreedGroup.sort())
     } catch (error) {
         console.log(error, "Error on breeds route")

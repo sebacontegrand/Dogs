@@ -2,15 +2,18 @@ import styles from './Pagination.module.css'
 
 
 export default function Pagination({dogsPerPage, dogs, pagination, currentPage}) {
-   
+    
     const pageNumbers = []
    
     for (let i = 1; i <= Math.ceil(dogs/dogsPerPage); i++) {
         pageNumbers.push(i)
     }
+
     return(
+        
         <nav>
             <ul className={styles.crumbs}>
+                
                 {
                    
                     pageNumbers &&
@@ -26,4 +29,5 @@ export default function Pagination({dogsPerPage, dogs, pagination, currentPage})
             </ul>
         </nav>
     )
+    
 };

@@ -32,7 +32,10 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      validate:{
+      isUrl:true,
+      }
     },
     life_span: {
       type: DataTypes.STRING,

@@ -9,17 +9,18 @@ const axios = require('axios');
 // GET para traer todos los perros
 router.get('/', async (req, res, next) => {
     const name = req.query.name;
+    
 try{
-        const allDogs = await allDogsFromEverywhere();
+        const allDogx = await allDogsFromEverywhere()
+      
       if(name){
-        const dogName = allDogs.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
-        
+        const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
+      
         res.status(200).send(dogName.length? dogName : 
         res.status(404).send('Still..no Dogs...'));
       }else{
-        res.status(200).send(allDogs);
+        res.status(200).send(allDogx);
       }
-    
 } catch(error){
     res.status(404).json("There are no dogs with this type of...name")
 }
@@ -29,31 +30,35 @@ try{
 router.get('/:idBreed', async (req, res, next) => {
   try {
     const { idBreed } = req.params;
-    const allDogs = await allDogsFromEverywhere();
+    const allDogx = await allDogsFromEverywhere();
     if (!idBreed) {
+        
         res.status(404).json("Couldn't find the name on DB")
+        
     } else {
-        const dog = allDogs.find(el => el.id.toString() === idBreed);
-        res.status(200).json(dog)
+        const dog = allDogx.find(el => el.id.toString() === idBreed);
+        res.status(200).send(dog)
     }
 } catch (error) {
-    res.status(404).send(error)
+    res.status(404).send("There are no dogs with this type of...name")
+    next(error)
 }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////
 // POST create a Dog
 router.post('/new' , async (req, res, next) => {
-  
-      var {
+  try{
+      let {
           name,
-          height_min, 
-          height_max,
+          height_max, 
+          height_min,
           weight_min,
           weight_max,
           life_span,
           createdInDB,
           temperament,
-          image  } = req.body;
+          image
+            } = req.body;
 
     if(!image){
         try {
@@ -69,7 +74,7 @@ router.post('/new' , async (req, res, next) => {
     }
 
     if (name && height_min && height_max && weight_min && weight_max && life_span && temperament) {
-        const createDog = await Dog.create({
+        const createdDog = await Dog.create({
             name:name,
             height_max: height_max,
             height_min: height_min,
@@ -80,19 +85,49 @@ router.post('/new' , async (req, res, next) => {
             image:image || 'https://dog.ceo/api/breeds/image/random'
         });
        
-        temperament.map(async el => {
-          const findTemperament = await Temperament.findAll({
-              where: { name: el }
+        
+          const findTemperament = await Temperament.findAll({ 
+            where: { name: temperament }
           });
-          createDog.addTemperament(findTemperament);
-      })
-      res.status(200).send(createDog);
+          await createdDog.addTemperament(findTemperament);
+      
+      const e = await Dog.findByPk(createdDog.id, {include: Temperament} )
+      const dogDb = {
+        id:e.id,
+        name:e.name,
+        height_max: e.height_max,
+        height_min: e.height_min,
+        weight_min: e.weight_min,
+        weight_max: e.weight_max,
+        life_span: e.life_span, 
+        createdInDB: e.createdInDB,
+        image: e.image || 'https://dog.ceo/api/breeds/image/random',
+        temperament: temperament.toString()
+        
+      }
+      console.log(temperament)
+      res.status(200).send(dogDb)
+      console.log(dogDb)
+  }}  
+       catch(error) {
+      res.status(404).send('Data needed to proceed is missing');
+      
+      next(error)
+  }
   } 
 
- else {
-      res.status(404).send('Data needed to proceed is missing');
-  }
-});
 
+);
 
+router.get('/check/:name', async (req,res)=>{
+    const {name} = req.params
+const p = await Dog.findOne ({
+    where: {name}
+    })
+    
+    if(p) { return res.json ({ok: false, msg: "The dog's name already exists"})}
+    else {
+        return res.json ({ok: true})
+    }
+})
 module.exports = router;
