@@ -19,7 +19,7 @@ export default function DogCard( { id, name, image, weightmin, weightmax, temper
                 )}
                 {temperaments && (
                   
-                  <h5><label>Temperaments:</label>{temperaments.map(el => <span key={el.id}>{el.name}, </span>)}</h5>
+                  <h5><label>Temperaments:</label>{temperaments.map(el => <span key={el.name}>{el.name}, </span>)}</h5>
                 )
                 
                 }

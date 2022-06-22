@@ -20,7 +20,7 @@ console.log('breed',breeds)
 
   
   const maxWeights = dogs
-    .map((el) => el.weight_max)
+    .map((el) => el.weight_max )
     .sort(function (a, b) {
       return a - b;
     });

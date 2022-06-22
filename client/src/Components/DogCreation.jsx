@@ -1,53 +1,12 @@
 import React from 'react'
+import axios from "axios"
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postDog, loadTempAction } from '../redux/actions';
 import styles from './DogCreation.module.css'
 import {Link} from 'react-router-dom'
 
-function validateForm(input){
-    // Error handling
-    let errorx = {};
 
-  if (input.name === '') {
-    errorx.name = "A Name must be typed";
-  } else {
-   if(input.name.match(/^[A-Za-z]+$/)){
-    errorx.name = "Name must contain letters only";
-  }}
-  if (!input.weight_min) {
-    errorx.weight_min = "A min Weight number must be typed from 3kg-40kg";
-  } else if(input.name.match(!/\d{1,2}/)){
-    errorx.weight_min = "weight must have min values";
-  } else {
-    errorx.weight_min = "";
-  }
-  if (!input.weight_max) {
-    errorx.weight_max = "Type a valid max weight number from 10kg-80kg";
-  }  else if (input.name.match(!/\d{1,2}/)){
-      errorx.weight_max = "weight must have max values";
-    } else{
-      errorx.weight_max = "";
-    }
-   
-  
-  if (!input.height_min) {
-    errorx.height_min = "Type a valid minimal height number from 5cm-40cm";
-  } else if(input.name.match(!/\d{1,2}/)){
-      errorx.height_min = "height must have min values";
-    }else {
-    errorx.height_min = "";
-  }
-  if (!input.height_max) {
-    errorx.height_max = "Type a valid maxim height number from 10cm-60cm";
-  }else if(input.name.match(!/\d{1,2}/)){
-      errorx.height_max = "height must have max values";
-    }else {
-    errorx.height_max = "";
-  }
-  return errorx;
-
-}
 
 export const DogCreation = () => {
 
@@ -57,6 +16,8 @@ useEffect(() => {
   dispatch(loadTempAction());
 }, [dispatch]);
 
+const success = useSelector((state) => state.success)
+const[errorx, setError] = React.useState({});
 const[input, setInput] = React.useState({
         name:'',
         image:'',
@@ -67,11 +28,9 @@ const[input, setInput] = React.useState({
         life_span:'',
         temperament:[]
 });
-const[errorx, setError] = React.useState({});
 
 
 function handleOnChange(e){
-  
     setInput({
         ...input,
         [e.target.name]: e.target.value,
@@ -83,16 +42,22 @@ function handleOnChange(e){
         })
       )
     }
-    function handleDelete(el) {
+function handleDelete(el) {
         setInput({
           ...input,
           temperament: input.temperament.filter((temp) => temp !== el),
         });
       }
-function handleOnSubmit(e){
+async function handleOnSubmit(e){
     e.preventDefault();
     if(!errorx.name && !errorx.image && !errorx.weigth_max && !errorx.weigth_min && !errorx.height_max && !errorx.height_min && !errorx.life_span && !errorx.temperament){
-     alert("Your dog has been created successfully");
+      
+
+      const checkNameResult = await axios.get(`http://localhost:3001/dogs/check/${input.name}`)
+      if(!checkNameResult.data.ok){
+        alert('Dog already exist...')
+      return 
+      }
     
       dispatch(postDog(input))
       //reseteo el estado
@@ -108,7 +73,7 @@ function handleOnSubmit(e){
     })}
     
     else{
-     alert('Something went wrong... please try later');
+     alert('Error, please try again...');
     }
 }
 function handleSelect(e) {
@@ -119,7 +84,50 @@ function handleSelect(e) {
   
 
   }
+function validateForm(input){
+    // Error handling
+    let errorx = {};
 
+  if (input.name === '') {
+    errorx.name = "A Name must be typed";
+  } else {
+    if(!/^[a-zA-Z\s]*$/gi.test(input.name)){
+         errorx.name =`The name can only contain letters.`;
+    }}
+  if (!input.weight_min) {
+    errorx.weight_min = "A min Weight number must be typed from 3kg-40kg";
+  } else if (!/\d{1,2}/gi.test(input.weight_min)) {
+    errorx.weight_min = "Weight must have min values. Example: '20'";
+  } else {
+    errorx.weight_min = "";
+  }
+  if (!input.weight_max) {
+    errorx.weight_max = "Type a valid max weight number from 10kg-80kg";
+  }  else if (!/\d{1,2}/gi.test(input.weight_max)) {
+    errorx.weight_max = "Weight must have max values. Example: '25'";
+  } else {
+    errorx.weight_max = "";
+  }
+  if (!input.height_min) {
+    errorx.height_min = "Type a valid minimal height number from 5cm-40cm";
+  } else if (!/\d{1,2}/gi.test(input.height_min)) {
+    errorx.height_min = "Height must have min values. Example: '25'";
+  } else {
+    errorx.height_min = "";
+  }
+  if (!input.height_max) {
+    errorx.height_max = "Type a valid maxim height number from 10cm-60cm";
+  }else if (!/\d{1,2}/gi.test(input.height_max)) {
+    errorx.height_max = "Height must have max values. Example: '25'";
+  } else {
+    errorx.height_max = "";
+  }
+  return errorx;
+
+}
+if(success){
+  alert('Dog created successfully')
+}
 
   return (
     <> 
@@ -131,25 +139,25 @@ function handleSelect(e) {
           <label>Create New Dog and Add to Database</label>
           <div className={styles.Section}>
           <label>Name</label>
-          <input type="text" onChange={(e)=>handleOnChange(e)} placeholder="American Bulldog..." name="name" value={input.name}/>
-          <div><p className={styles.error}>{errorx.name}</p></div>
+          <input key='name' type="text" onChange={(e)=>handleOnChange(e)} placeholder="American Bulldog..." name="name" value={input.name} required/>
+          <div><p className={styles.error}>{errorx?.name || ''}</p></div>
           <label>Image</label>
-          <input type="url" onChange={(e)=>handleOnChange(e)} placeholder="http://image.com" name="image" value={input.image}/> 
+          <input key='image' type="url" onChange={(e)=>handleOnChange(e)} placeholder="http://image.com" name="image" value={input.image}/> 
           <div><p className={styles.error}>{errorx.image}</p></div>
           <label>Max-Height[cm]</label>
-          <input type="number" max="60" min="10" onChange={(e)=>handleOnChange(e)} placeholder="32" name="height_max" value={input.height_max}/>
-          <div><p className={styles.error}>{errorx.height_max}</p></div>
+          <input key='height_max' type="number" max="60" min="10" onChange={(e)=>handleOnChange(e)} placeholder="32" name="height_max" value={input.height_max}/>
+          <div><p className={styles.error}>{errorx?.height_max || ''}</p></div>
           <label>Min-Height[cm]</label>
-          <input type="number" max="40" min="5" onChange={(e)=>handleOnChange(e)} placeholder="5" name="height_min" value={input.height_min}/>
-          <div><p className={styles.error}>{errorx.height_min}</p></div>
+          <input key='height_min' type="number" max="40" min="5" onChange={(e)=>handleOnChange(e)} placeholder="5" name="height_min" value={input.height_min}/>
+          <div><p className={styles.error }>{errorx?.height_min || ''}</p></div>
           <label>Max-Weight[kg]</label>
-          <input type="number" max="80" min="10" onChange={(e)=>handleOnChange(e)} placeholder="20" name="weight_max" value={input.weight_max}/>
-          <div><p className={styles.error}>{errorx.weight_max}</p></div>
+          <input key='weight_max' type="number" max="80" min="10" onChange={(e)=>handleOnChange(e)} placeholder="20" name="weight_max" value={input.weight_max}/>
+          <div><p className={styles.error }>{errorx?.weight_max || ''}</p></div>
           <label>Min-Weight[kg]</label>
-          <input type="number" max="40" min="3" onChange={(e)=>handleOnChange(e)} placeholder="4" name="weight_min" value={input.weight_min}/>
-          <div><p className={styles.error}>{errorx.weight_min}</p></div>
+          <input key='weight_min' type="number" max="40" min="3" onChange={(e)=>handleOnChange(e)} placeholder="4" name="weight_min" value={input.weight_min}/>
+          <div><p className={styles.error }>{errorx?.weight_min || ''}</p></div>
           <label>Life-Span[years]</label>
-          <input type="text" onChange={(e)=>handleOnChange(e)} placeholder="Life_span..." name="life_span" value={input.life_span}/>
+          <input key='life_span' type="text" onChange={(e)=>handleOnChange(e)} placeholder="Life_span..." name="life_span" value={input.life_span}/>
       </div>
       <select onChange={(e)=>handleSelect(e)} className={styles.styled_select}> 
                 {temperamentx?.map((temp) => {

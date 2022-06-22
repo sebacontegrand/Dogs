@@ -1,7 +1,7 @@
 const axios = require('axios')
 const { API_KEY } = process.env;
 const { Temperament, Dog } = require('../db');
-const URL = `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}&limit=100`;
+const URL = `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}&limit=1000`;
 
 // capturar los datos de la API y de la bas de datos
 

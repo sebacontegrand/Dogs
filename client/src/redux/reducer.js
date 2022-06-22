@@ -16,7 +16,8 @@ import { ADD_DOG,
          FILTER_CREATED,
          FILTER_BY_MAX_WEIGHT,
          FILTER_BY_MIN_WEIGHT,
-         ORDER_BY_WEIGHT
+         ORDER_BY_WEIGHT,
+         
          
          
             
@@ -31,6 +32,7 @@ const initialState = {
     loadedDogs:0,
     loadTemperaments:false,
     error:false,
+    success: false,
     loading:false
     
 }
@@ -49,7 +51,9 @@ export default function rootReducer(state=initialState, action){
             return{
 
                 ...state,
-                error:action.payload
+                error:action.payload,
+                success:false
+                
             }    
         case ADD_DOG_SUCCESS:
             console.log('actions',action.payload)
@@ -57,7 +61,8 @@ export default function rootReducer(state=initialState, action){
                 ...state,
                 loadedDogs:state.loadedDogs+1,
                 loading:false,
-                dogs:[...state.dogs, action.payload]
+                dogs:[...state.dogs, action.payload],
+                success:true
             }
             
         case LOADING_DOG_SUCCESS:
@@ -68,7 +73,8 @@ export default function rootReducer(state=initialState, action){
                 loadedDogs: action.payload.length,
                 loadedTemperaments: true,
                 dogs: action.payload,
-                alldogx: action.payload
+                alldogx: action.payload,
+                success:false
                 }
 
         case LOADING_TEMPERAMENT_SUCCESS:
@@ -126,7 +132,8 @@ export default function rootReducer(state=initialState, action){
             const filterTemp = action.payload ==='all'? [...state.alldogx]:
             state.alldogx.filter(e => {
                 
-                return  (e.temperament?.includes(action.payload) || e.Temperaments?.map(el=>el.name === action.payload))})
+                return  (e.temperament?.includes(action.payload) || 
+                e.Temperaments?.map(el=> el.name === action.payload))})
                 
             return{
                 ...state,

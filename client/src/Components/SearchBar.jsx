@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import {getDogsByName} from '../redux/actions'
 import styles from './SearchBar.module.css'
 
@@ -9,12 +10,18 @@ export const SearchBar = () => {
 const [dogState, setDogState] = useState([])
 const dispatch= useDispatch();
 
-function handleSubmit(e){
+async function handleSubmit(e){
     e.preventDefault()
-    
+    const checkName = await axios.get(`http://localhost:3001/dogs/check/${e.target.value}`)
+    console.log("checkName",checkName)
+      if(!checkName.data.ok){
+        alert('Dog does not exist in db')
+      return 
+      }
     if(dogState.length===0) {
         return alert('Please enter a Dogs Breed')
-    } else{
+    }
+    else{
         dispatch(getDogsByName(dogState));
         setDogState('');
     } 

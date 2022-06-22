@@ -15,13 +15,14 @@ try{
       
       if(name){
         const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
-      
-        res.status(200).send(dogName.length? dogName : 
-        res.status(404).send('Still..no Dogs...'));
+        dogName.length? 
+        res.status(200).send(dogName) : 
+        res.status(404).send('Still..no Dogs...');
       }else{
         res.status(200).send(allDogx);
       }
 } catch(error){
+  alert("There are no dogs with this type of...name")
     res.status(404).json("There are no dogs with this type of...name")
 }
 });
@@ -121,13 +122,14 @@ router.post('/new' , async (req, res, next) => {
 
 router.get('/check/:name', async (req,res)=>{
     const {name} = req.params
-const p = await Dog.findOne ({
+const post = await Dog.findOne ({
     where: {name}
     })
     
-    if(p) { return res.json ({ok: false, msg: "The dog's name already exists"})}
+    if(post) { return res.json ({ok: false, msg: "The dog's name already exists"})}
     else {
         return res.json ({ok: true})
     }
 })
+
 module.exports = router;
