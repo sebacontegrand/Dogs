@@ -11,18 +11,15 @@ const {allDogsFromEverywhere} = require('../API/index');
 
 router.get('/', async (req, res) => {
 
-    const allDogx = await axios.get(URL);
-    try {
-        
+        const allDogx = await axios.get(URL);
+try {       
         let everyTemperament = allDogx.data.map(dog => dog.temperament ? dog.temperament : "No info").map(dog => dog?.split(', ').sort(
             function (a, b) {
               if (a < b) return -1;
               else return 1;
             }
-          ));
-         
-        let everyTemperament2 = everyTemperament.flat(); //se repiten x cada perro
-       
+          ));        
+        let everyTemperament2 = everyTemperament.flat(); //se repiten x cada perro      
         everyTemperament2.forEach(el => {//los creo en db con nombre unico
             if (el) { 
                 Temperament.findOrCreate({
@@ -30,26 +27,20 @@ router.get('/', async (req, res) => {
                 });
             }
         });
-        everyTemperament2 = await Temperament.findAll(); //los devuelvo de la db
-        
+        everyTemperament2 = await Temperament.findAll(); //los devuelvo de la db  
         res.status(200).json(everyTemperament2);
-        
     }   catch(error) {
         res.status(404).send(error)
     }
-
-   
 });
     
 router.get('/dog/', async (req, res) => {
-    const temperament = req.query.temperament;
-    
-    const everyDog = await allDogsFromEverywhere();
-    const dogSearchResult = everyDog.filter((dog) => {
-    temperament === 'all'? everyDog : (dog.temperament.toLowerCase()).includes(temperament.toLowerCase()) 
-    });
-    
-    res.status(200).json(dogSearchResult)
+        const temperament = req.query.temperament;
+        const everyDog = await allDogsFromEverywhere();
+        const dogSearchResult = everyDog.filter((dog) => {
+        temperament === 'all'? everyDog : (dog.temperament.toLowerCase()).includes(temperament.toLowerCase()) 
+        });
+        res.status(200).json(dogSearchResult)
     
 });
 

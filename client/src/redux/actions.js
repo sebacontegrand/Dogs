@@ -28,7 +28,7 @@ import { ADD_DOG,
 
 export function getDogsByName(name){
 
-    return async(dispatch)=> {
+        return async(dispatch)=> {
         const answer = await axios.get(`http://localhost:3001/dogs?name=${name}`);
         if(!name){
             return alert('Dog is not on DB')
@@ -43,9 +43,7 @@ export function getDogsByName(name){
 
 export function getDogsById (id){
     const dogs = store.getState().dogs
-  
     const details = dogs.find((el) => {
-        
         return String(el.id) === id
     })
         return  {
@@ -53,28 +51,16 @@ export function getDogsById (id){
         payload: details
     }
 }
-
-
-
 export function postDog(input) {
     return async (dispatch) => {
         dispatch( postDogx())
-console.log("DOG INPUT",input)
         try {
             await axios.post('http://localhost:3001/dogs/new', input)
-            
-            dispatch(postDogSuccess(input))
-            
+            dispatch(postDogSuccess(input))  
         } catch (error) {
-            console.log('ERROR', error)
-            dispatch(postDogError())
-            
+            dispatch(postDogError())           
         }
-        
-
-
     }
-
 }
 const postDogx = () => ({
     type: ADD_DOG,
@@ -84,13 +70,10 @@ const postDogSuccess = (input) => ({
     type: ADD_DOG_SUCCESS,
     payload : input
 })
-
-
 const postDogError = () => ({
     type: ADD_DOG_ERROR,
     payload: true
 })
-
  export function loadedDogsAction(){
      return async(dispatch)=>{
          dispatch(loadDogs());
@@ -117,42 +100,29 @@ const loadDogsError = () => ({
     type: LOADING_DOG_ERROR,
     payload: true
 })
-
 export function loadTempAction () {
     return async (dispatch) => {
-       
-        
-
         try {
             const answer = await axios.get('http://localhost:3001/temperaments');
-            console.log('answer.data',answer.data)
             dispatch(loadedTemperaments())
             dispatch(loadTempSuccess(answer.data));
-            
         } catch (error) {
             dispatch(loadTempError(error));
-            
         }
     }
 }
-
 const loadedTemperaments = () => ({
     type: LOADING_TEMPERAMENT,
     payload: true
-
 })
-
 const loadTempSuccess = (temperaments) => ({
-
     type: LOADING_TEMPERAMENT_SUCCESS,
     payload: temperaments
 })
-
 const loadTempError = () => ({
     type: LOADING_TEMPERAMENT_ERROR,
     payload: true
 })
-
 export function getDogsByBreed(breed) {
     return async(dispatch) =>{
         dispatch({
@@ -161,13 +131,9 @@ export function getDogsByBreed(breed) {
         })
     }
 }
-
-
 export function getBreedsAction() {
-    
     return async function (dispatch) {
         const answer = await axios.get('http://localhost:3001/breeds');
-        
         return dispatch({
             type: GET_BREEDS,
             payload: answer.data
@@ -181,17 +147,14 @@ export function orderByName(payload) {
     }
 }
 export function filteredDogsByTemperament(temp) {
-   console.log(temp)
     return async(dispatch) =>{
         dispatch({
             type: GET_DOGS_BY_TEMP,
             payload:temp
         })
     }
-    
 }
 export function filteredCreated(payload) {
-   
     return {
         type: FILTER_CREATED,
         payload

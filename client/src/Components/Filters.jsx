@@ -6,36 +6,25 @@ import styles from './Filters.module.css'
 
 export default function Filters() {
     const dispatch = useDispatch();
-    
-     
     const dogs = useSelector((state) => state.dogs);
-      console.log('dogs',dogs)
     const breeds = useSelector((state) => state.breeds);
-      console.log('breed',breeds)
     const temperamentx = useSelector((state) => state.temperaments.sort(
-      
-    function (a, b) {
-      if (a < b) return -1;
-      else return 1;
-    }
+    function (a, b) {if (a < b) return -1; else return 1;}
     ));
-    console.log('tempx',temperamentx)
-    
 
-  
-  const maxWeights = dogs
+    const maxWeights = dogs
     .map((el) => el.weight_max )
     .sort(function (a, b) {
       return a - b ;
     });
-  const allDogsMaxWeights = [...new Set(maxWeights)];
+    const allDogsMaxWeights = [...new Set(maxWeights)];
   
-  const minWeights = dogs
-  .map((el) => el.weight_min)
-  .sort(function (a, b) {
+    const minWeights = dogs
+    .map((el) => el.weight_min)
+    .sort(function (a, b) {
     return a - b;
-  });
-const allDogsMinWeights = [...new Set(minWeights)];
+    });
+    const allDogsMinWeights = [...new Set(minWeights)];
 
     useEffect(() => {
         dispatch(loadedDogsAction());

@@ -49,11 +49,9 @@ export default function rootReducer(state=initialState, action){
         case LOADING_DOG_ERROR:
         case LOADING_TEMPERAMENT_ERROR:
             return{
-
                 ...state,
                 error:action.payload,
                 success:false
-                
             }    
         case ADD_DOG_SUCCESS:
             console.log('actions',action.payload)
@@ -64,7 +62,6 @@ export default function rootReducer(state=initialState, action){
                 dogs:[...state.dogs, action.payload],
                 success:true
             }
-            
         case LOADING_DOG_SUCCESS:
                 const parsedDogs = action.payload.map(dog =>{
                     if(dog.Temperaments){ 
@@ -83,16 +80,13 @@ export default function rootReducer(state=initialState, action){
                 alldogx: parsedDogs,
                 success:false
                 }
-
         case LOADING_TEMPERAMENT_SUCCESS:
-            
                 return{
                     ...state,
                     loading: false,
                     error: null,
                     temperaments: action.payload
-                }
-                
+                }       
         case GET_DOG_BY_NAME:
             const parsedbyNameDogs = action.payload.map(dog =>{
                 if(dog.Temperaments){ 
@@ -157,9 +151,6 @@ export default function rootReducer(state=initialState, action){
                 dogs: filterTemp
                 
             }
-    
-
-
         case FILTER_CREATED:
             const createdFilter = action.payload === 'created' ?
                     state.alldogx.filter(e => e.createdInDB === true) :
@@ -168,12 +159,6 @@ export default function rootReducer(state=initialState, action){
                             ...state,
                             dogs: createdFilter,
                             }
-
-
-
-
-
-
         case FILTER_BY_MAX_WEIGHT:
             const everyDog = state.dogs
             const maxFiltered = action.payload === 'all' ?
@@ -191,8 +176,7 @@ export default function rootReducer(state=initialState, action){
             return {
                 ...state,
                 dogs: minFiltered
-            }
-            
+            }  
         case ORDER_BY_WEIGHT:
             const sortedWeight = action.payload === 'asc' ?
                 [...state.dogs].sort(function (a, b) {

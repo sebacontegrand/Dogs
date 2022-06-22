@@ -23,7 +23,6 @@ export default function Detail (props){
                 <h1 className={styles.title}> {detailsState.name} </h1>
                 <img className={styles.imga} alt='' src={detailsState.image || ''}/>
                 <h1 className={styles.type} > Temperament: {detailsState.temperament}</h1>
-                {/* <h1 className={styles.type} > {detailsState.Temperaments?.map(el => <span key={el.name}>, {el.name}</span>)}</h1> */}
                 <h4 className={styles.type}>Height: {detailsState.height_min}-{detailsState.height_max} [Cm]</h4>
                 <h4 className={styles.type}>Weight: {detailsState.weight_min}-{detailsState.weight_max} [Kg]</h4>
                 <h4 className={styles.type}>Life_Span: {detailsState.life_span}</h4>

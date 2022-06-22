@@ -49,40 +49,38 @@ function handleDelete(el) {
         });
       }
 async function handleOnSubmit(e){
-    e.preventDefault();
-    if(!errorx.name && !errorx.image && !errorx.weigth_max && !errorx.weigth_min && !errorx.height_max && !errorx.height_min && !errorx.life_span && !errorx.temperament){
+        e.preventDefault();
+        if(!errorx.name && !errorx.image && !errorx.weigth_max && !errorx.weigth_min && !errorx.height_max && !errorx.height_min && !errorx.life_span && !errorx.temperament){
       
 
-      const checkNameResult = await axios.get(`http://localhost:3001/dogs/check/${input.name}`)
-      if(!checkNameResult.data.ok){
-        alert('Dog already exist...')
-      return 
-      }
+        const checkNameResult = await axios.get(`http://localhost:3001/dogs/check/${input.name}`)
+        if(!checkNameResult.data.ok){
+          alert('Dog already exist...')
+        return 
+        }
+      
+        dispatch(postDog(input))
+        //reseteo el estado
+        setInput({
+          name:'',
+          image:'',
+          height_max:'',
+          height_min:'',
+          weight_max:'',
+          weight_min:'',
+          life_span:'',
+          temperament:[]  
+        })}
     
-      dispatch(postDog(input))
-      //reseteo el estado
-      setInput({
-        name:'',
-        image:'',
-        height_max:'',
-        height_min:'',
-        weight_max:'',
-        weight_min:'',
-        life_span:'',
-        temperament:[]  
-    })}
-    
-    else{
-     alert('Error, please try again...');
-    }
+        else{
+        alert('Error, please try again...');
+        }
 }
 function handleSelect(e) {
     setInput({
       ...input,
       temperament: [...input.temperament, e.target.value],
     });
-  
-
   }
 function validateForm(input){
     // Error handling

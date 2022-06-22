@@ -35,8 +35,8 @@ export default function Dog() {
   return (
     <>
      <div >
-                <button onClick={handleNext}>Next</button>
-                <button onClick={handlePrev}>Prev</button>
+        <button onClick={handleNext}>Next</button>
+        <button onClick={handlePrev}>Prev</button>
         <Pagination
           dogsPerPage={dogsPerPage}
           dogs={dogs.length}
@@ -44,22 +44,17 @@ export default function Dog() {
           currentPage={currentPage}
         />
         <div className=''></div>
-        {
-          
-          currentDogs.map((el) => { 
-            
+        {currentDogs.map((el) => { 
             return  (
-              
-          <DogCards
-          key={el.id}
-            id={el.id}
-            name={el.name}
-            image={el.image}
-            weightmin={el.weight_min}
-            weightmax={el.weight_max}
-            temperaments={el.Temperaments}
-            temperament={el.temperament}/>
-        )})}
+                      <DogCards
+                      key={el.id}
+                      id={el.id}
+                      name={el.name}
+                      image={el.image}
+                      weightmin={el.weight_min}
+                      weightmax={el.weight_max}
+                      temperament={el.temperament}/>
+                    )})}
       </div>
     </>
   );

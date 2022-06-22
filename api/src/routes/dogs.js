@@ -9,76 +9,72 @@ const axios = require('axios');
 // GET para traer todos los perros
 router.get('/', async (req, res, next) => {
     const name = req.query.name;
-    
 try{
         const allDogx = await allDogsFromEverywhere()
-      
-      if(name){
+        if(name){
         const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
         dogName.length
         ? res.status(200).send(dogName) 
         : res.status(404).json({error:'Still..no Dogs...'});
-      }else{
+        }else{
           res.status(200).send(allDogx);
-      }
+        }
 } catch(error){
   
-    res.status(404).json({error:"There are no dogs with this type of...name"})
+          res.status(404).json({error:"There are no dogs with this type of...name"})
 }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////
 // GET Dog by ID
 router.get('/:idBreed', async (req, res, next) => {
   try {
-    const { idBreed } = req.params;
-    const allDogx = await allDogsFromEverywhere();
-    if (!idBreed) {
-        
-        res.status(404).json({error:"Couldn't find the name on DB"})
-        
-    } else {
+        const { idBreed } = req.params;
+        const allDogx = await allDogsFromEverywhere();
+        if (!idBreed) {       
+        res.status(404).json({error:"Couldn't find the name on DB"})        
+        } else {
         const dog = allDogx.find(el => el.id.toString() === idBreed);
         res.status(200).send(dog)
-    }
+        }
 } catch (error) {
-    res.status(404).send("There are no dogs with this type of...name")
-    next(error)
+        res.status(404).send("There are no dogs with this type of...name")
+        next(error)
 }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////
 // GET CHECK NAME
 router.get('/check/:name', async (req,res)=>{
-  const {name} = req.params
-const post = await Dog.findOne ({
-  where: {name}
-  })
+        const {name} = req.params
+        const post = await Dog.findOne ({
+        where: {name}
+        })
   
-  if(post) { return res.json ({ok: false, msg: "The dog's name already exists"})}
-  else {
-      return res.json ({ok: true })
+        if(post) { return res.json ({ok: false, msg: "The dog's name already exists"})}
+        else {
+        return res.json ({ok: true })
   }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////
 // GET CHECK SEARCH
 router.get('/check/search/:name', async (req,res)=>{
-  const {name} = req.params
-  const oneDog = await Dog.findOne ({
-  where: {name}
-  })
-  const allDogx = await allDogsFromEverywhere()
-  const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
+        const {name} = req.params
+        const oneDog = await Dog.findOne ({
+        where: {name}
+        })
+        const allDogx = await allDogsFromEverywhere()
+        const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
 
-  if(oneDog || dogName.length>0) { return res.json ({ok: true, msg: "Dog exist in Db"})}
+        if(oneDog || dogName.length>0) { return res.json ({ok: true, msg: "Dog exist in Db"})}
   
-  else {
-      return res.json ({ok: false, msg:'Dog does not exist in db'})
-  }
+        else {
+        return res.json ({ok: false, msg:'Dog does not exist in db'})
+        }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////
 // POST create a Dog
 router.post('/new' , async (req, res, next) => {
   try{
-      let {
+        let {
           name,
           height_max, 
           height_min,
@@ -90,20 +86,18 @@ router.post('/new' , async (req, res, next) => {
           image
             } = req.body;
 
-    if(!image){
-        try {
-            image =await (await axios.get('https://dog.ceo/api/breeds/image/random')).data.message;
-      } catch (error) {
-            console.log(error)
+        if(!image){
+    try {
+          image =await (await axios.get('https://dog.ceo/api/breeds/image/random')).data.message;
+  } catch (error) {
+          console.log(error)
             }
-    } 
-    if (!name || !height_min || !height_max || !weight_min || !weight_max || !life_span || !temperament) {
-    
-        res.status(404).json("Missing some fields")
-
+        } 
+        if (!name || !height_min || !height_max || !weight_min || !weight_max || !life_span || !temperament) {
+          res.status(404).json("Missing some fields")
     }
 
-    if (name && height_min && height_max && weight_min && weight_max && life_span && temperament) {
+        if (name && height_min && height_max && weight_min && weight_max && life_span && temperament) {
         const createdDog = await Dog.create({
             name:name,
             height_max: height_max,
@@ -121,32 +115,29 @@ router.post('/new' , async (req, res, next) => {
           });
           await createdDog.addTemperament(findTemperament);
       
-      const e = await Dog.findByPk(createdDog.id, {include: Temperament, as:'temperament'} )
-      const dogDb = {
-        id:e.id,
-        name:e.name,
-        height_max: e.height_max,
-        height_min: e.height_min,
-        weight_min: e.weight_min,
-        weight_max: e.weight_max,
-        life_span: e.life_span, 
-        createdInDB: e.createdInDB,
-        image: e.image || 'https://dog.ceo/api/breeds/image/random',
-        temperament: temperament.toString()
+          const e = await Dog.findByPk(createdDog.id, {include: Temperament, as:'temperament'} )
+          const dogDb = {
+          id:e.id,
+          name:e.name,
+          height_max: e.height_max,
+          height_min: e.height_min,
+          weight_min: e.weight_min,
+          weight_max: e.weight_max,
+          life_span: e.life_span, 
+          createdInDB: e.createdInDB,
+          image: e.image || 'https://dog.ceo/api/breeds/image/random',
+          temperament: temperament.toString()
         
       }
-      console.log(temperament)
-      res.status(200).send(dogDb)
-      console.log(dogDb)
-  }}  
-       catch(error) {
-      res.status(404).send('Data needed to proceed is missing');
+          
+          res.status(200).send(dogDb)
       
-      next(error)
+  }}  
+    catch(error) {
+          res.status(404).send('Data needed to proceed is missing');
+          next(error)
   }
   } 
-
-
 );
 
 

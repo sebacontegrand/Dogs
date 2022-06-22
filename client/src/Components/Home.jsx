@@ -10,22 +10,17 @@ import Filters from './Filters';
 
 
 function Home() {
-
-
-  const dispatch = useDispatch();
-
-  const loadTemperaments = useSelector(state => state.loadedTemperaments);
-  
+    const dispatch = useDispatch();
+    const loadTemperaments = useSelector(state => state.loadedTemperaments);
 
   useEffect(() => {
-    if(!loadTemperaments){
-      const loadTemperaments = () => dispatch(loadTempAction());
-      loadTemperaments();
-    }
-    const loadDogs = () => dispatch(loadedDogsAction());
-    loadDogs();
-    console.log(loadDogs)
-  }, [loadTemperaments, dispatch] )
+        if(!loadTemperaments){
+        const loadTemperaments = () => dispatch(loadTempAction());
+        loadTemperaments();
+        }
+        const loadDogs = () => dispatch(loadedDogsAction());
+        loadDogs();
+    }, [loadTemperaments, dispatch] )
 
   
   return (
