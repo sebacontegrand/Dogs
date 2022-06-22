@@ -16,13 +16,7 @@ export default function DogCard( { id, name, image, weightmin, weightmax, temper
                 <h5 className=''>Weight_min:{weightmin}kg</h5>
                 { temperament && (
                   <h5 className={styles.dogTemp}>Temperaments: {temperament}</h5>
-                )}
-                {temperaments && (
-                  
-                  <h5><label>Temperaments:</label>{temperaments.map(el => <span key={el.name}>{el.name}, </span>)}</h5>
-                )
-                
-                }
+                )} 
               </div>
               <div className={styles.imageArea}>
                 <img

@@ -13,11 +13,14 @@ export default function Filters() {
     const breeds = useSelector((state) => state.breeds);
       console.log('breed',breeds)
     const temperamentx = useSelector((state) => state.temperaments.sort(
+      
     function (a, b) {
       if (a < b) return -1;
       else return 1;
     }
     ));
+    console.log('tempx',temperamentx)
+    
 
   
   const maxWeights = dogs

@@ -65,10 +65,9 @@ router.get('/check/search/:name', async (req,res)=>{
   const oneDog = await Dog.findOne ({
   where: {name}
   })
-  console.log(oneDog)
   const allDogx = await allDogsFromEverywhere()
   const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
-console.log(dogName)
+
   if(oneDog || dogName.length>0) { return res.json ({ok: true, msg: "Dog exist in Db"})}
   
   else {
@@ -122,7 +121,7 @@ router.post('/new' , async (req, res, next) => {
           });
           await createdDog.addTemperament(findTemperament);
       
-      const e = await Dog.findByPk(createdDog.id, {include: Temperament} )
+      const e = await Dog.findByPk(createdDog.id, {include: Temperament, as:'temperament'} )
       const dogDb = {
         id:e.id,
         name:e.name,

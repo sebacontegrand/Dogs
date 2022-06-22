@@ -125,6 +125,7 @@ export function loadTempAction () {
 
         try {
             const answer = await axios.get('http://localhost:3001/temperaments');
+            console.log('answer.data',answer.data)
             dispatch(loadedTemperaments())
             dispatch(loadTempSuccess(answer.data));
             

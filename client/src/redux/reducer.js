@@ -66,19 +66,26 @@ export default function rootReducer(state=initialState, action){
             }
             
         case LOADING_DOG_SUCCESS:
+                const parsedDogs = action.payload.map(dog =>{
+                    if(dog.Temperaments){ 
+                        dog.temperament = dog.Temperaments.map(temp => temp.name).join(', ')
+                        delete dog.Temperament
+                    }
+                    return dog
+                })
                 return{
                 ...state,
                 loading: false,
                 error: null,
                 loadedDogs: action.payload.length,
                 loadedTemperaments: true,
-                dogs: action.payload,
-                alldogx: action.payload,
+                dogs: parsedDogs,
+                alldogx: parsedDogs,
                 success:false
                 }
 
         case LOADING_TEMPERAMENT_SUCCESS:
-            console.log('temperaments',action.payload)
+            
                 return{
                     ...state,
                     loading: false,
@@ -87,10 +94,16 @@ export default function rootReducer(state=initialState, action){
                 }
                 
         case GET_DOG_BY_NAME:
-            
+            const parsedbyNameDogs = action.payload.map(dog =>{
+                if(dog.Temperaments){ 
+                    dog.temperament = dog.Temperaments.map(temp => temp.name).join(', ')
+                    delete dog.Temperament
+                }
+                return dog
+            })
                 return {
                     ...state,
-                    dogs: action.payload,
+                    dogs: parsedbyNameDogs,
                     }
         case GET_DOG_BY_ID:
                 return{
@@ -131,9 +144,13 @@ export default function rootReducer(state=initialState, action){
             
             const filterTemp = action.payload ==='all'? [...state.alldogx]:
             state.alldogx.filter(e => {
-                
-                return  (e.temperament?.includes(action.payload) || 
-                e.Temperaments?.map(el=> el.name === action.payload))})
+                console.log('temp en db',e.Temperaments)
+                console.log('temp en API',e.temperament)
+                if(e.Temperaments){ 
+                    e.temperament = e.Temperaments.map(temp => temp.name).join(', ')
+                }
+                return  (e.temperament?.includes(action.payload) 
+                )})
                 
             return{
                 ...state,
