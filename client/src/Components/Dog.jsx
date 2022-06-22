@@ -31,6 +31,7 @@ export default function Dog() {
   useEffect(() => {
     dispatch(loadedDogsAction());
     }, [dispatch]);
+    
   return (
     <>
      <div >

@@ -15,15 +15,15 @@ try{
       
       if(name){
         const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
-        dogName.length? 
-        res.status(200).send(dogName) : 
-        res.status(404).send('Still..no Dogs...');
+        dogName.length
+        ? res.status(200).send(dogName) 
+        : res.status(404).json({error:'Still..no Dogs...'});
       }else{
-        res.status(200).send(allDogx);
+          res.status(200).send(allDogx);
       }
 } catch(error){
-  alert("There are no dogs with this type of...name")
-    res.status(404).json("There are no dogs with this type of...name")
+  
+    res.status(404).json({error:"There are no dogs with this type of...name"})
 }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ router.get('/:idBreed', async (req, res, next) => {
     const allDogx = await allDogsFromEverywhere();
     if (!idBreed) {
         
-        res.status(404).json("Couldn't find the name on DB")
+        res.status(404).json({error:"Couldn't find the name on DB"})
         
     } else {
         const dog = allDogx.find(el => el.id.toString() === idBreed);
@@ -44,6 +44,36 @@ router.get('/:idBreed', async (req, res, next) => {
     res.status(404).send("There are no dogs with this type of...name")
     next(error)
 }
+})
+/////////////////////////////////////////////////////////////////////////////////////////////
+// GET CHECK NAME
+router.get('/check/:name', async (req,res)=>{
+  const {name} = req.params
+const post = await Dog.findOne ({
+  where: {name}
+  })
+  
+  if(post) { return res.json ({ok: false, msg: "The dog's name already exists"})}
+  else {
+      return res.json ({ok: true })
+  }
+})
+/////////////////////////////////////////////////////////////////////////////////////////////
+// GET CHECK SEARCH
+router.get('/check/search/:name', async (req,res)=>{
+  const {name} = req.params
+  const oneDog = await Dog.findOne ({
+  where: {name}
+  })
+  console.log(oneDog)
+  const allDogx = await allDogsFromEverywhere()
+  const dogName = allDogx.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()));
+console.log(dogName)
+  if(oneDog || dogName.length>0) { return res.json ({ok: true, msg: "Dog exist in Db"})}
+  
+  else {
+      return res.json ({ok: false, msg:'Dog does not exist in db'})
+  }
 })
 /////////////////////////////////////////////////////////////////////////////////////////////
 // POST create a Dog
@@ -120,16 +150,5 @@ router.post('/new' , async (req, res, next) => {
 
 );
 
-router.get('/check/:name', async (req,res)=>{
-    const {name} = req.params
-const post = await Dog.findOne ({
-    where: {name}
-    })
-    
-    if(post) { return res.json ({ok: false, msg: "The dog's name already exists"})}
-    else {
-        return res.json ({ok: true})
-    }
-})
 
 module.exports = router;

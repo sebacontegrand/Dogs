@@ -12,9 +12,9 @@ const dispatch= useDispatch();
 
 async function handleSubmit(e){
     e.preventDefault()
-    const checkName = await axios.get(`http://localhost:3001/dogs/check/${e.target.value}`)
-    console.log("checkName",checkName)
-      if(!checkName.data.ok){
+    const checkNameDB = await axios.get(`http://localhost:3001/dogs/check/search/${dogState}`)
+   console.log(checkNameDB.data.ok)
+    if(!checkNameDB.data.ok){
         alert('Dog does not exist in db')
       return 
       }
@@ -24,6 +24,7 @@ async function handleSubmit(e){
     else{
         dispatch(getDogsByName(dogState));
         setDogState('');
+        
     } 
 }
 

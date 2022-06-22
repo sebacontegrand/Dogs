@@ -6,23 +6,24 @@ import styles from './Filters.module.css'
 
 export default function Filters() {
     const dispatch = useDispatch();
-    const temperamentx = useSelector((state) => state.temperaments.sort(
-      function (a, b) {
-        if (a < b) return -1;
-        else return 1;
-      }
-    ));
+    
      
     const dogs = useSelector((state) => state.dogs);
-    console.log('dogs',dogs)
+      console.log('dogs',dogs)
     const breeds = useSelector((state) => state.breeds);
-console.log('breed',breeds)
+      console.log('breed',breeds)
+    const temperamentx = useSelector((state) => state.temperaments.sort(
+    function (a, b) {
+      if (a < b) return -1;
+      else return 1;
+    }
+    ));
 
   
   const maxWeights = dogs
     .map((el) => el.weight_max )
     .sort(function (a, b) {
-      return a - b;
+      return a - b ;
     });
   const allDogsMaxWeights = [...new Set(maxWeights)];
   
@@ -144,7 +145,7 @@ const allDogsMinWeights = [...new Set(minWeights)];
               All DOGS
             </option>
             <option value="created">Your Own Dogs </option>
-             {/* <option value="inDB">In dbase</option> */}
+             
           </select>
         </div>
         <div className={styles.filterSection}>
