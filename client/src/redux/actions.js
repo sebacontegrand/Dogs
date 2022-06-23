@@ -75,6 +75,7 @@ const postDogError = () => ({
     payload: true
 })
  export function loadedDogsAction(){
+    
      return async(dispatch)=>{
          dispatch(loadDogs());
          try{

@@ -3,8 +3,8 @@ import DogCards from "../Components/DogCards";
 import Pagination from "../Components/Pagination";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadedDogsAction } from "../redux/actions";
-
+import { loadedDogsAction} from "../redux/actions";
+import styles from './Dog.module.css'
 
 export default function Dog() {
   const dispatch = useDispatch();
@@ -14,38 +14,48 @@ export default function Dog() {
   const indexOfLastDog = currentPage * dogsPerPage;
   const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = dogs.slice(indexOfFirstDog, indexOfLastDog);
+ 
   console.log("currentDogs",currentDogs)
   console.log('currentPage',currentPage)
+  
+  
   const pagination = (pageNumber) => {
+    
     setCurrentPage(pageNumber);
   };
-
- 
-
+  
   const handleNext = () => {
+    if (currentPage>1)
     setCurrentPage(currentPage -1)
   }
   const handlePrev = () => {
+    if(currentDogs.length>7)
     setCurrentPage(currentPage + 1)
   }
-  useEffect(() => {
-    dispatch(loadedDogsAction());
+    useEffect(() => {
+    dispatch(loadedDogsAction())
     }, [dispatch]);
-    
+    useEffect(()=>{
+    if(currentDogs.length===0){
+      setCurrentPage(1)
+    }
+   })
+   
   return (
     <>
      <div >
         <button onClick={handleNext}>Next</button>
         <button onClick={handlePrev}>Prev</button>
         <Pagination
+          currentPage={currentPage}
           dogsPerPage={dogsPerPage}
           dogs={dogs.length}
           pagination={pagination}
-          currentPage={currentPage}
         />
-        <div className=''></div>
+        <div className={styles.dogs}>
         {currentDogs.map((el) => { 
             return  (
+                      
                       <DogCards
                       key={el.id}
                       id={el.id}
@@ -53,8 +63,10 @@ export default function Dog() {
                       image={el.image}
                       weightmin={el.weight_min}
                       weightmax={el.weight_max}
-                      temperament={el.temperament}/>
+                      temperament={el.temperament}
+                      />
                     )})}
+                    </div>
       </div>
     </>
   );

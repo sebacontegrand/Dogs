@@ -1,5 +1,6 @@
 .side {
     display: flex;
+    flex-wrap:wrap;
     flex-direction: row;
     background-color: rgba(20, 17, 102, 0.645);
     color: #fff;
@@ -9,7 +10,7 @@
     margin-left: 3%;
     padding: 20px;
     border-radius: 12px;
-    width: 35cm;
+    width: 100%;
     position:relative;
   }
   
@@ -60,11 +61,12 @@
   }
   
   .filterSection {
-    margin: 10px 10px;
+    margin: 4px 50px;
   }
   
   .filterHeader {
     margin-bottom: 2%;
+    ;
   }
   
   select {

@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { postDog, loadTempAction } from '../redux/actions';
 import styles from './DogCreation.module.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 
 
 export const DogCreation = () => {
-
+const navigate= useNavigate();
 const dispatch = useDispatch();
 const temperamentx = useSelector((state) => state.temperaments)
 useEffect(() => {
@@ -94,7 +94,9 @@ function validateForm(input){
     }}
   if (!input.weight_min) {
     errorx.weight_min = "A min Weight number must be typed from 3kg-40kg";
-  } else if (!/\d{1,2}/gi.test(input.weight_min)) {
+  }
+  else if(input.weight_min<3 ||input.weight_min >40 ){errorx.weight_min = "A min Weight number must be typed from 3kg-40kg"} 
+  else if (!/\d{1,2}/gi.test(input.weight_min)) {
     errorx.weight_min = "Weight must have min values. Example: '20'";
   } else {
     errorx.weight_min = "";
@@ -103,28 +105,38 @@ function validateForm(input){
     errorx.weight_max = "Type a valid max weight number from 10kg-80kg";
   }  else if (!/\d{1,2}/gi.test(input.weight_max)) {
     errorx.weight_max = "Weight must have max values. Example: '25'";
-  } else {
+  }else if(input.weight_max<10 ||input.weight_max >80 ){errorx.weight_max = "A max Weight number must be typed from 10kg-80kg"}  
+  else {
     errorx.weight_max = "";
   }
   if (!input.height_min) {
     errorx.height_min = "Type a valid minimal height number from 5cm-40cm";
   } else if (!/\d{1,2}/gi.test(input.height_min)) {
     errorx.height_min = "Height must have min values. Example: '25'";
-  } else {
+  } else if(input.height_min<5 ||input.height_min >40 ){errorx.height_min = "A min Height number must be typed from 5cm-40cm"}
+  else {
     errorx.height_min = "";
   }
   if (!input.height_max) {
     errorx.height_max = "Type a valid maxim height number from 10cm-60cm";
   }else if (!/\d{1,2}/gi.test(input.height_max)) {
     errorx.height_max = "Height must have max values. Example: '25'";
-  } else {
+  }else if(input.height_max<10 ||input.height_max >60 ){errorx.height_max = "A max Height number must be typed from 10cm-60cm"} 
+  else {
     errorx.height_max = "";
+  }
+  if(input.height_max<input.height_min){
+    errorx.height_max ='Height max must be higher than min'
+  }
+  if (input.weight_max<input.weight_min){
+    errorx.weight_max ='Weight max must be higher than min'
   }
   return errorx;
 
 }
 if(success){
   alert('Dog created successfully')
+  navigate('/home')
 }
 
   return (

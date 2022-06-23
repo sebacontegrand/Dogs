@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {loadedDogsAction, loadTempAction, getBreedsAction, getDogsByBreed, orderByName, filteredDogsByTemperament, filteredCreated, filterByMAXWeight, filterByMINWeight, orderByWeight } from '../redux/actions'
 import styles from './Filters.module.css'
-
 export default function Filters() {
+   
     const dispatch = useDispatch();
     const dogs = useSelector((state) => state.dogs);
     const breeds = useSelector((state) => state.breeds);
@@ -30,6 +30,7 @@ export default function Filters() {
         dispatch(loadedDogsAction());
         dispatch(loadTempAction());
         dispatch(getBreedsAction());
+        
       }, [dispatch]);
     
       function handleClick(e) {
@@ -51,6 +52,7 @@ export default function Filters() {
       }
       function handleFilterCreated(e) {
         dispatch(filteredCreated(e.target.value));
+        
       }
       function handleMAXWeight(e) {
         e.preventDefault();

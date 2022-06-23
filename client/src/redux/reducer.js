@@ -16,11 +16,7 @@ import { ADD_DOG,
          FILTER_CREATED,
          FILTER_BY_MAX_WEIGHT,
          FILTER_BY_MIN_WEIGHT,
-         ORDER_BY_WEIGHT,
-         
-         
-         
-            
+         ORDER_BY_WEIGHT,   
         } from "./types"
 
 const initialState = {
@@ -159,6 +155,7 @@ export default function rootReducer(state=initialState, action){
                             ...state,
                             dogs: createdFilter,
                             }
+
         case FILTER_BY_MAX_WEIGHT:
             const everyDog = state.dogs
             const maxFiltered = action.payload === 'all' ?
