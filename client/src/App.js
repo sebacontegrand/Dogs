@@ -2,7 +2,6 @@ import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import './App.css';
 import LandingPage from './Components/LandingPage';
-
 import Home from './Components/Home'
 import {DogCreation} from './Components/DogCreation';
 import DogDetail from './Components/DogDetail';

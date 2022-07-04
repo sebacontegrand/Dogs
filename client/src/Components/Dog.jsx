@@ -64,6 +64,7 @@ export default function Dog() {
                       weightmin={el.weight_min}
                       weightmax={el.weight_max}
                       temperament={el.temperament}
+                      origin={el.origin}
                       />
                     )})}
                     </div>

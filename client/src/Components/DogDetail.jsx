@@ -6,13 +6,12 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from './DogDetail.module.css'
 
-export default function Detail (props){
-  const   {id} = useParams()
-  console.log(id)
+export default function Detail (){
+  const {id} = useParams()
   const dispatch = useDispatch() 
   useEffect (() => {dispatch(getDogsById(id))} ,[dispatch,id]) 
   const detailsState = useSelector((state) => state.details)
-  console.log('DETAILS', detailsState)
+  
     if(!detailsState){
     return <h1>Loading...</h1>
     }
