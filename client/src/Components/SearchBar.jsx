@@ -12,7 +12,7 @@ const dispatch= useDispatch();
 
 async function handleSubmit(e){
     e.preventDefault()
-    const checkNameDB = await axios.get(`http://localhost:3001/dogs/check/search/${dogState}`)
+    const checkNameDB = await axios.get(`/dogs/check/search/${dogState}`)
    console.log(checkNameDB.data.ok)
     if(!checkNameDB.data.ok){
         alert('Dog does not exist in db')
