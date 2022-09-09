@@ -29,7 +29,7 @@ import { ADD_DOG,
 export function getDogsByName(name){
 
         return async(dispatch)=> {
-        const answer = await axios.get(`http://localhost:3001/dogs?name=${name}`);
+        const answer = await axios.get(`/dogs?name=${name}`);
         if(!name){
             return alert('Dog is not on DB')
         }
@@ -55,7 +55,7 @@ export function postDog(input) {
     return async (dispatch) => {
         dispatch( postDogx())
         try {
-            await axios.post('http://localhost:3001/dogs/new', input)
+            await axios.post('/dogs/new', input)
             dispatch(postDogSuccess(input))  
         } catch (error) {
             dispatch(postDogError())           
@@ -79,7 +79,7 @@ const postDogError = () => ({
      return async(dispatch)=>{
          dispatch(loadDogs());
          try{
-         const answer = await axios.get('http://localhost:3001/dogs');
+         const answer = await axios.get('/dogs');
         
          dispatch(loadDogsSuccess(answer.data))
          }
@@ -104,7 +104,7 @@ const loadDogsError = () => ({
 export function loadTempAction () {
     return async (dispatch) => {
         try {
-            const answer = await axios.get('http://localhost:3001/temperaments');
+            const answer = await axios.get('/temperaments');
             dispatch(loadedTemperaments())
             dispatch(loadTempSuccess(answer.data));
         } catch (error) {
@@ -134,7 +134,7 @@ export function getDogsByBreed(breed) {
 }
 export function getBreedsAction() {
     return async function (dispatch) {
-        const answer = await axios.get('http://localhost:3001/breeds');
+        const answer = await axios.get('/breeds');
         return dispatch({
             type: GET_BREEDS,
             payload: answer.data
