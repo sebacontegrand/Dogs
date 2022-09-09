@@ -8,13 +8,13 @@ export default function NavBar(){
 <>
     <div className={styles.nav} >
         <div className={styles.TitleAndSearchBar}>
-            <div className={styles.logoAndTitle}>“Somewhere, a little dog gonna love you.” – ...
+            <div >“Somewhere, a little dog loves you.” – ...
             </div>
             <div>
                 <Link to={'/'}>@</Link>     
             </div>
             <div>
-                <Link to={'/Home'}>HOME
+                <Link className={styles.letters}to={'/Home'}>HOME
                 </Link>
             </div>
             <div>
@@ -22,9 +22,9 @@ export default function NavBar(){
             </div>
         </div>
         <div>
-            <Link  to='/dogs/new'>NEW DOG</Link>
+            <Link className={styles.letters} to='/dogs/new'>NEW DOG</Link>
         </div>
-        <div className={styles.aboutNavButton}>
+        <div className={styles.letters}>
             <Link  to={'/quotes'}>    Quotes?   </Link>
         </div>
     </div>

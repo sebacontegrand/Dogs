@@ -24,6 +24,10 @@
     align-items: center;
     font-size: 24px;
     font-style: italic;
+    
+  }
+  .letters{
+    color:#fff
   }
   .aboutNavButton {
     display: flex;

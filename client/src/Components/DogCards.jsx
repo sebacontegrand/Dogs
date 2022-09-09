@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import styles from "./DogCards.module.css";
-export default function DogCard( { id, name, image, weightmin, weightmax, temperament } ) {
+export default function DogCard( { id, name, image, weightmin, weightmax, temperament, origin } ) {
 
     return (
       <>
@@ -14,6 +14,8 @@ export default function DogCard( { id, name, image, weightmin, weightmax, temper
               <div className={styles.tempArea}>
                 <h5 className=''>Weight_max:{weightmax}kg</h5>
                 <h5 className=''>Weight_min:{weightmin}kg</h5>
+                {origin &&
+                <h5 className=''>Origin:{origin}</h5>}
                 { temperament && (
                   <h5 className={styles.dogTemp}>Temperaments: {temperament}</h5>
                 )} 

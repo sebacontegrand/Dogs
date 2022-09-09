@@ -53,7 +53,7 @@ async function handleOnSubmit(e){
         if(!errorx.name && !errorx.image && !errorx.weigth_max && !errorx.weigth_min && !errorx.height_max && !errorx.height_min && !errorx.life_span && !errorx.temperament){
       
 
-        const checkNameResult = await axios.get(`http://localhost:3001/dogs/check/${input.name}`)
+        const checkNameResult = await axios.get(`/dogs/check/${input.name}`)
         if(!checkNameResult.data.ok){
           alert('Dog already exist...')
         return 
@@ -86,9 +86,12 @@ function validateForm(input){
     // Error handling
     let errorx = {};
 
-  if (input.name === '') {
+     if(input.name.length === 0){
+      errorx.name = 'Please Type a Name for your Dog'
+    } else if(input.name.length < 3) {
     errorx.name = "A Name must be typed";
-  } else {
+  }
+   else {
     if(!/^[a-zA-Z\s]*$/gi.test(input.name)){
          errorx.name =`The name can only contain letters.`;
     }}
@@ -138,6 +141,8 @@ if(success){
   alert('Dog created successfully')
   navigate('/home')
 }
+
+
 
   return (
     <> 
